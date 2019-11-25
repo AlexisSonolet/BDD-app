@@ -16,7 +16,8 @@ CREATE TABLE artiste
     nomArtiste VARCHAR(100),
     prenomArtiste VARCHAR(100),
     dateNaissanceArtiste DATE,
-    cirqueArtiste VARCHAR(100)
+    cirqueArtiste VARCHAR(100),
+    telephoneArtiste VARCHAR(16)
 );
 
 CREATE TABLE numero
@@ -53,7 +54,7 @@ CREATE TABLE planning_numero
     heureSpectacle INT NOT NULL,
     idNumero INT NOT NULL REFERENCES numero(idNumero),
     FOREIGN KEY (dateSpectacle, heureSpectacle) REFERENCES spectacle(dateSpectacle, heureSpectacle),
-    PRIMARY KEY (dateSpectacle, heureSpectacle)
+    PRIMARY KEY (dateSpectacle, heureSpectacle, idNumero)
 );
 
 CREATE TABLE specialite_artiste
