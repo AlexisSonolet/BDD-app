@@ -1,6 +1,7 @@
 --CREATE DATABASE IF NOT EXISTS festival;
 --USE festival;
 
+DROP TABLE expert;
 DROP TABLE planning_artiste;
 DROP TABLE planning_numero;
 DROP TABLE specialite_artiste;
@@ -74,7 +75,7 @@ CREATE TABLE expert
 (
     idExpert INT NOT NULL REFERENCES artiste(idArtiste),
     PRIMARY KEY (idExpert)
-)
+);
 
 CREATE TABLE evaluation
 (
