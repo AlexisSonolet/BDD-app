@@ -69,9 +69,15 @@ CREATE TABLE pseudo_artiste
     pseudoArtiste VARCHAR(100)
 );
 
+CREATE TABLE expert
+(
+    idExpert INT NOT NULL REFERENCES artiste(idArtiste),
+    PRIMARY KEY (idExpert)
+)
+
 CREATE TABLE evaluation
 (
-    idArtiste INT NOT NULL REFERENCES artiste(idArtiste),
+    idArtiste INT NOT NULL REFERENCES expert(idExpert),
     idNumero INT NOT NULL REFERENCES numero(idNumero),
     noteExpert INT NOT NULL CHECK(noteExpert BETWEEN 0 and 10),
     evaluationExpert VARCHAR(1000),
