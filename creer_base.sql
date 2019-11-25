@@ -22,6 +22,7 @@ CREATE TABLE artiste
 CREATE TABLE numero
 (
     idNumero INT PRIMARY KEY NOT NULL,
+    nomNumero VARCHAR(100),
     themeNumero VARCHAR(100),
     resumeNumero VARCHAR(1000),
     artistePrincipalNumero REFERENCES artiste(idArtiste),
