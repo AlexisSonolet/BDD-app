@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 public class Fenetre extends JFrame {
         private SelectPanel selectPanel;
+        private InsertPanel insertPanel;
 
         public Fenetre() {
                 super();
@@ -22,8 +23,11 @@ public class Fenetre extends JFrame {
                 container.setSize(this.getWidth(), this.getHeight());
                 this.setContentPane(container);
 
-                this.selectPanel = new SelectPanel(600, 200);
+                this.selectPanel = new SelectPanel(this.getWidth(), 100);
                 container.add(selectPanel);
+
+                this.insertPanel = new InsertPanel(this.getWidth(), 100);
+                container.add(insertPanel);
         }
 
         public static void main(String[] args) {

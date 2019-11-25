@@ -1,5 +1,8 @@
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 
 public class SelectPanel extends JPanel {
         private JComboBox selectOptions;
@@ -11,12 +14,13 @@ public class SelectPanel extends JPanel {
         }
 
         private void init() {
-                Object[] options = new Object[]{"Select option 1", "Select option 2"};
+                this.add(new JLabel("SELECT TRANSACTIONS"));
+
+                String[] options = new String[]{"Select option 1", "Select option 2"};
                 selectOptions = new JComboBox(options);
                 this.add(selectOptions);
-        }
 
-        public String getOption() {
-                return selectOptions.getSelectedItem().toString();
+                JButton execButton = new JButton("Exec");
+                this.add(execButton);
         }
 }
