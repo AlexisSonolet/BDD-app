@@ -1,6 +1,7 @@
 --CREATE DATABASE IF NOT EXISTS festival;
 --USE festival;
 
+DROP TABLE expert;
 DROP TABLE planning_artiste;
 DROP TABLE planning_numero;
 DROP TABLE specialite_artiste;
@@ -16,12 +17,14 @@ CREATE TABLE artiste
     nomArtiste VARCHAR(100),
     prenomArtiste VARCHAR(100),
     dateNaissanceArtiste DATE,
-    cirqueArtiste VARCHAR(100)
+    cirqueArtiste VARCHAR(100),
+    telephoneArtiste VARCHAR(16)
 );
 
 CREATE TABLE numero
 (
     idNumero INT PRIMARY KEY NOT NULL,
+    nomNumero VARCHAR(100),
     themeNumero VARCHAR(100),
     resumeNumero VARCHAR(1000),
     artistePrincipalNumero REFERENCES artiste(idArtiste),
@@ -53,7 +56,7 @@ CREATE TABLE planning_numero
     heureSpectacle INT NOT NULL,
     idNumero INT NOT NULL REFERENCES numero(idNumero),
     FOREIGN KEY (dateSpectacle, heureSpectacle) REFERENCES spectacle(dateSpectacle, heureSpectacle),
-    PRIMARY KEY (dateSpectacle, heureSpectacle)
+    PRIMARY KEY (dateSpectacle, heureSpectacle, idNumero)
 );
 
 CREATE TABLE specialite_artiste
@@ -68,9 +71,15 @@ CREATE TABLE pseudo_artiste
     pseudoArtiste VARCHAR(100)
 );
 
+CREATE TABLE expert
+(
+    idExpert INT NOT NULL REFERENCES artiste(idArtiste),
+    PRIMARY KEY (idExpert)
+);
+
 CREATE TABLE evaluation
 (
-    idArtiste INT NOT NULL REFERENCES artiste(idArtiste),
+    idArtiste INT NOT NULL REFERENCES expert(idExpert),
     idNumero INT NOT NULL REFERENCES numero(idNumero),
     noteExpert INT NOT NULL CHECK(noteExpert BETWEEN 0 and 10),
     evaluationExpert VARCHAR(1000),
