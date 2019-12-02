@@ -19,7 +19,7 @@ public class Database{
 
     Database(Connection con){
         artiste = new Artiste(con,this);
-        numero = new Numero(con,this);
+        numero = new TableNumero(con,this);
         spectacle = new Spectacle(con,this);
         planning_artiste = new Planning_Artiste(con,this);
         planning_numero = new Planning_Numero(con,this);

@@ -10,11 +10,12 @@ public class Artiste extends Table {
 
   public void AjoutArtiste(int idArtiste, String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
     try{
-      Statement stmt = this.con.createStatement();
+      Statement stmt = this.connection.createStatement();
       stmt.executeQuery("INSERT into table artiste VALUES ('idArtiste', 'nomArtiste', 'prenomArtiste', 'dateNaissance', 'cirqueArtiste', 'telephoneArtiste')");
       stmt.close();
-    } catch (SQLException e) {
+	} catch (SQLException e) {
       System.err.println("failed");
       e.printStackTrace(System.err);
     }
+  }
 }
