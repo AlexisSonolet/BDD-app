@@ -79,7 +79,7 @@ CREATE TABLE expert
 
 CREATE TABLE evaluation
 (
-    idArtiste INT NOT NULL REFERENCES expert(idExpert),
+    idExpert INT NOT NULL REFERENCES expert(idExpert),
     idNumero INT NOT NULL REFERENCES numero(idNumero),
     noteExpert INT NOT NULL CHECK(noteExpert BETWEEN 0 and 10),
     evaluationExpert VARCHAR(1000),
