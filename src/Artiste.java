@@ -11,13 +11,13 @@ public class Artiste extends Table {
 
   public void ajoutArtiste(int idArtiste, String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
     try{
-        PreparedStatement istm = connection.prepareStatement("INSERT into table artiste VALUES ('?', '?', '?', '?', '?', '?')");
-        istm.setString(1, ""+idArtiste);
-        istm.setString(2, ""+nomArtiste);
-        istm.setString(3, ""+prenomArtiste);
-        istm.setString(4, ""+dateNaissance);
-        istm.setString(5, ""+cirqueArtiste);
-        istm.setString(6, ""+telephoneArtiste);
+        PreparedStatement istm = connection.prepareStatement("INSERT into table artiste VALUES ('?', '?', '?', '?', '?', '?');");
+        istm.setString(0, ""+idArtiste);
+        istm.setString(1, ""+nomArtiste);
+        istm.setString(2, ""+prenomArtiste);
+        istm.setString(3, ""+dateNaissance);
+        istm.setString(4, ""+cirqueArtiste);
+        istm.setString(5, ""+telephoneArtiste);
         istm.executeQuery();
         istm.close();
 	} catch (SQLException e) {
