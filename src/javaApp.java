@@ -10,11 +10,11 @@ public class javaApp {
 			String user = "sonoleta";
 			String passwd = "asonolet";
 			Connection connection = DriverManager.getConnection(url, user, passwd);
-			
-			Statement stmt = connection.createStatement();
-			stmt.executeQuery(" SELECT * FROM emp");
 		} catch (SQLException e) {
 			e. printStackTrace ();
 		}
+
+        Database db = new Database();
+        db.prepareArtist();
 	}
 }
