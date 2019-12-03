@@ -29,8 +29,7 @@ CREATE TABLE numero
     resumeNumero VARCHAR(1000),
     artistePrincipalNumero REFERENCES artiste(idArtiste),
     dureeNumero INT CHECK(dureeNumero >= 0),
-    noteNumero INT CHECK(noteNumero BETWEEN 0 and 10),
-    evaluationNumero VARCHAR(1000)
+    nbartistesNumero INT CHECK(nbartistesNumero >= 1)
 );
 
 CREATE TABLE spectacle

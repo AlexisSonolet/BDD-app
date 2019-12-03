@@ -1,3 +1,5 @@
+package gui;
+
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;

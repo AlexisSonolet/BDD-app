@@ -1,2 +1,3 @@
-/Insertion.class
-/javaApp.class
+*.class
+.gitignore
+*.swp
