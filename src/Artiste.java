@@ -8,7 +8,7 @@ public class Artiste extends Table {
     super(con, db);
   }
 
-  public void AjoutArtiste(int idArtiste, String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
+  public void ajoutArtiste(int idArtiste, String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
     try{
         PreparedStatement istm = connection.prepareStatement("INSERT into table artiste VALUES ('?', '?', '?', '?', '?', '?')");
         istm.setString(1, ""+idArtiste);
