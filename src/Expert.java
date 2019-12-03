@@ -21,6 +21,7 @@ public class Expert extends Table {
                 throw new IllegalArgumentException("Unknown artist");
             }
             c1stm.close();
+            res1.close();
             // Check that the artist does not play in a show.
             PreparedStatement c2stm = connection.prepareStatement("SELECT * from Planning_Artiste WHERE idArtiste=?");
             c2stm.setString(1,""+idArtiste);
@@ -29,6 +30,7 @@ public class Expert extends Table {
                 throw new IllegalArgumentException("Artist already plays in a show");
             }
             c2stm.close();
+            res2.close();
             // Check if this is not already an expert. (maybe not throw an exception but do nothing instead)
             PreparedStatement c3stm = connection.prepareStatement("SELECT * from Expert WHERE idExpert=?");
             c3stm.setString(1,""+idArtiste);
@@ -42,6 +44,7 @@ public class Expert extends Table {
             istm.setString(1, ""+idArtiste);
             istm.executeQuery();
             istm.close();
+            res3.close();
 		} catch (SQLException e){
 			System.err.println("failed");
 			e.printStackTrace(System.err);

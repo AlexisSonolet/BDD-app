@@ -20,10 +20,19 @@ public class Evaluation extends Table{
         registered = -1;    // Indicates that we are not evaluating a show;
     }
 
+    /**
+     * Cancels the current evaluation
+     */
+
     public void cancel(){
         registered = -1;
         specialistes = 0;
     }
+
+    /**
+     * Begins the evaluation of a show.
+     * @param idNum The id of the show to evaluate
+     */
 
     public void begin(int idNum){
         try {
@@ -39,6 +48,7 @@ public class Evaluation extends Table{
                 throw new IllegalArgumentException("Unknown show");
             }
             c1stm.close();
+            res1.close();
             // Check that it has not already been evaluated.
             PreparedStatement c2stm = connection.prepareStatement("SELECT * from Evaluation WHERE idNumero=?");
             c2stm.setString(1,""+idNum);
@@ -47,6 +57,7 @@ public class Evaluation extends Table{
                 throw new IllegalArgumentException("Show already evaluated");
             }
             c2stm.close();
+            res2.close();
             // We can evaluate this show.
             idNumero = idNum;
             registered = 0;
@@ -56,11 +67,19 @@ public class Evaluation extends Table{
             ResultSet res3 = c3stm.executeQuery();
             theme = res3.getString(1);
             c3stm.close();
+            res3.close();
         } catch (SQLException e) {
             System.err.println("failed");
 			e.printStackTrace(System.err);
         }
     }
+
+    /**
+     * Saves an evaluation for the current show. Checks that it satisfies all the constrains.
+     * @param idExpert  The id of the expert evaluating
+     * @param note  The note he/she has given to this show
+     * @param eval  The evaluation he/she has given to this show
+     */
 
     public void evaluate(int idExpert, float note, String eval){
         try {
@@ -84,6 +103,7 @@ public class Evaluation extends Table{
                 throw new IllegalArgumentException("Unknown expert");
             }
             c1stm.close();
+            res1.close();
             // Check that this expert has not already evaluated this show.
             for (int i = 0;i<registered;i++){
                 if (experts[i]==idExpert){
@@ -98,6 +118,7 @@ public class Evaluation extends Table{
                 throw new IllegalArgumentException("Expert has already evaluated too many shows");
             }
             c2stm.close();
+            res2.close();
             // Check that we won't have too many specialists.
             PreparedStatement c3stm = connection.prepareStatement("SELECT * from Specialite_Artiste WHERE idArtiste=? AND SpecialiteArtiste=?");
             c3stm.setString(1,""+idExpert);
@@ -119,6 +140,7 @@ public class Evaluation extends Table{
                 }
             }
             c3stm.close();
+            res3.close();
             // We can save the evaluation.
             specialistes+=res;
             notes[registered] = note;
@@ -129,6 +151,10 @@ public class Evaluation extends Table{
 			e.printStackTrace(System.err);
         }
     }
+
+    /**
+     * Commits the evaluations given to the current show
+     */
 
     public void commit(){
         if (registered==-1){
