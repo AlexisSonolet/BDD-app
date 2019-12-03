@@ -38,6 +38,7 @@ public class Evaluation extends Table{
             if (!res1.next()){
                 throw new IllegalArgumentException("Unknown show");
             }
+            c1stm.close();
             // Check that it has not already been evaluated.
             PreparedStatement c2stm = connection.prepareStatement("SELECT * from Evaluation WHERE idNumero=?");
             c2stm.setString(1,""+idNum);
@@ -45,6 +46,7 @@ public class Evaluation extends Table{
             if (res2.next()){
                 throw new IllegalArgumentException("Show already evaluated");
             }
+            c2stm.close();
             // We can evaluate this show.
             idNumero = idNum;
             registered = 0;
@@ -53,6 +55,7 @@ public class Evaluation extends Table{
             c3stm.setString(1,""+idNum);
             ResultSet res3 = c3stm.executeQuery();
             theme = res3.getString(1);
+            c3stm.close();
         } catch (SQLException e) {
             System.err.println("failed");
 			e.printStackTrace(System.err);
@@ -80,6 +83,7 @@ public class Evaluation extends Table{
             if (!res1.next()){
                 throw new IllegalArgumentException("Unknown expert");
             }
+            c1stm.close();
             // Check that this expert has not already evaluated this show.
             for (int i = 0;i<registered;i++){
                 if (experts[i]==idExpert){
@@ -93,6 +97,7 @@ public class Evaluation extends Table{
             if (res2.getInt(1)>=15){
                 throw new IllegalArgumentException("Expert has already evaluated too many shows");
             }
+            c2stm.close();
             // Check that we won't have too many specialists.
             PreparedStatement c3stm = connection.prepareStatement("SELECT * from Specialite_Artiste WHERE idArtiste=? AND SpecialiteArtiste=?");
             c3stm.setString(1,""+idExpert);
@@ -113,6 +118,7 @@ public class Evaluation extends Table{
                     throw new IllegalArgumentException("Too many non-specialists for the evaluation of this show");
                 }
             }
+            c3stm.close();
             // We can save the evaluation.
             specialistes+=res;
             notes[registered] = note;
@@ -139,6 +145,7 @@ public class Evaluation extends Table{
                 stm.setString(3, ""+notes[i]);
                 stm.setString(4, evaluations[i]);
                 stm.executeQuery();
+                stm.close();
             }
             cancel();
         } catch (SQLException e) {
