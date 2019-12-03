@@ -161,7 +161,7 @@ public class Evaluation extends Table{
             throw new IllegalArgumentException("Not evenn evaluating");
         }
         if (registered<5){
-            throw new IllegalArgumentException("Not all experts have send their evaluation");
+            throw new IllegalArgumentException("Not all experts have sent their evaluation");
         }
         try {
             for (int i=0;i<5;i++){

@@ -4,8 +4,8 @@ public class javaApp {
 		try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			String url = "jdbc:oracle:thin:@Oracle1.ensimag.fr:" + "1521:oracle1";
-			String user = "sonoleta";
-			String passwd = "asonolet";
+			String user = "benmansn";
+			String passwd = "benmansn";
 			Connection connection = DriverManager.getConnection(url, user, passwd);
 			Database db = new Database(connection);
 			db.prepareArtist();
