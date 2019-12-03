@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class Database{
     Scanner sc;
-    Table artiste;
+    Artiste artiste;
     Table numero;
-    Table spectacle;
+    Spectacle spectacle;
     Table planning_artiste;
     Table planning_numero;
     Table specialite_artiste;
     Table pseudo_artiste;
-    Table expert;
-    Table evaluation;
+    Expert expert;
+    Evaluation evaluation;
 
     /**
      * Sets up a database via the given connection
@@ -20,12 +20,12 @@ public class Database{
      */
     Database(Connection con){
         artiste = new Artiste(con,this);
-        numero = new TableNumero(con,this);
+        numero = new Numero(con,this);
         spectacle = new Spectacle(con,this);
-        planning_artiste = new Planning_Artiste(con,this);
-        planning_numero = new Planning_Numero(con,this);
-        specialite_artiste = new Specialite_Artiste(con,this);
-        pseudo_artiste = new Pseudo_Artiste(con,this);
+        planning_artiste = new Planning_Artistes(con,this);
+        // planning_numero = new Planning_Numero(con,this);
+        // specialite_artiste = new Specialite_Artiste(con,this);
+        // pseudo_artiste = new Pseudo_Artiste(con,this);
         expert = new Expert(con,this);
         evaluation = new Evaluation(con,this);
 
@@ -83,7 +83,6 @@ public class Database{
         }
     }
 
-}
     public void prepareExpert() {
         String[] columns = new String[] {"idArtiste"};
         String[] values;
