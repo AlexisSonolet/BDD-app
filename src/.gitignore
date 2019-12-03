@@ -1,11 +1,3 @@
-/Insertion.class
-/javaApp.class
-/Artiste.class
-/Database.class
-/Evaluation.class
-/Expert.class
-/Table.class
-/TableSpectacle.class
-/Numero.class
-/TableNumero.class
-/TablePlanningArtistes.class
+*.class
+.gitignore
+*.swp
