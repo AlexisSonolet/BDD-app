@@ -2,13 +2,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.*;
 
 public class Artiste extends Table {
   Artiste(Connection con, Database db){
     super(con, db);
   }
 
-  public void AjoutArtiste(int idArtiste, String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
+  public void ajoutArtiste(int idArtiste, String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
     try{
         PreparedStatement istm = connection.prepareStatement("INSERT into table artiste VALUES ('?', '?', '?', '?', '?', '?')");
         istm.setString(1, ""+idArtiste);

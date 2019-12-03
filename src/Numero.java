@@ -46,7 +46,7 @@ public class Numero extends Table {
 			prstmt.setInt(4, Duree);
 			prstmt.setInt(5, NbArtistes);
 			prstmt.setInt(6, idArtistePrincipal);
-			
+			prstmt.close();
 			ResultSet res = prstmt.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
