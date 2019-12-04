@@ -71,10 +71,21 @@ public class Spectacle extends Table{
                 stmt.setString(1, date);
                 stmt.setInt(2, heure);
                 stmt.setInt(3, num);
+
                 res = stmt.executeQuery();
                 res.close();
                 stmt.close();
             }
+
+            stmt = connection.prepareStatement("INSERT INTO spectacle VALUES (TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?");
+            stmt.setString(1, date);
+            stmt.setInt(2, heure);
+            stmt.setString(3, theme);
+            stmt.setInt(4, idArtiste);
+            stmt.setInt(5, prix);
+
+            stmt.executeQuery();
+            stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
