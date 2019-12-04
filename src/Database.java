@@ -76,7 +76,7 @@ public class Database{
                 String sline = " | ";
                 for (int i=0;i<m;i++){
                     sline+=line.get(i);
-                    for (int j=0;j<line.get(i).length()-sizes[i];i++){
+                    for (int j=0;j<sizes[i]-line.get(i).length();j++){
                         sline+=" ";
                     }
                     sline+=" | ";

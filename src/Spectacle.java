@@ -21,9 +21,9 @@ public class Spectacle extends Table{
 	 * theme different de celui du spectacle ; l'id du presentateur est invalide ; l'id
 	 * d'au moins 1 des spectacles est invalide
 	 */
-	public void insert(int date, int heure, String theme, int presentateur,
+	public void insert(String date, int heure, String theme, int presentateur,
 			int prix, int[] listeNumeros) throws IllegalArgumentException {
-		//verification des contraintes
+		//Verification des contraintes
 		if (heure != 9 && heure != 14) {
 			throw new IllegalArgumentException("L'heure d'un spectacle doit etre 9 ou 14, et non : " + heure);
 		}
@@ -64,7 +64,17 @@ public class Spectacle extends Table{
                 stmt.close();
                 res.close();
 			}
-			//creation de la requete
+
+            // Creation de la requete
+            for (int num : listeNumeros) {
+                stmt = connection.prepareStatement("INSERT INTO planning_numero VALUES (TO_DATE(?, 'YYYY-MM-DD'), ?, ?)");
+                stmt.setString(1, date);
+                stmt.setInt(2, heure);
+                stmt.setInt(3, num);
+                res = stmt.executeQuery();
+                res.close();
+                stmt.close();
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
