@@ -9,7 +9,7 @@ public class Pseudo_Artiste extends Table{
 	
 	public void ajoutPseudoArtiste(int idArtiste, String pseudo) {
 		try{
-	        PreparedStatement istm = connection.prepareStatement("INSERT into psuedo_artiste VALUES (?, ?)");
+	        PreparedStatement istm = connection.prepareStatement("INSERT into pseudo_artiste VALUES (?, ?)");
 	        istm.setInt(1, idArtiste);
 	        istm.setString(2, pseudo);
 	        istm.executeQuery();

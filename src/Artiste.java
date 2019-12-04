@@ -25,4 +25,16 @@ public class Artiste extends Table {
         e.printStackTrace(System.err);
     }
   }
+  
+  public void suppressionArtiste(int idArtiste) {
+	  try{
+	        PreparedStatement istm = connection.prepareStatement("DELETE FROM artiste WHERE idArtiste = ?");
+	        istm.setInt(1, idArtiste);
+	        istm.executeQuery();
+	        istm.close();
+		} catch (SQLException e) {
+	        System.err.println("failed");
+	        e.printStackTrace(System.err);
+	    }
+  }
 }

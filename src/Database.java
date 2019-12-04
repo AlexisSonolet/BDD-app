@@ -31,7 +31,7 @@ public class Database{
 
         this.sc = new Scanner(System.in);
     }
-
+// AJOUT, SUPPRESSION DANS LA TABLE ARTISTE
     public void prepareArtist() {
         String[] columns = new String[] {"idArtiste", "nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
         String[] values;
@@ -42,6 +42,28 @@ public class Database{
         this.artiste.ajoutArtiste(Integer.parseInt(values[0]), values[1], values[2], values[3], values[4], values[5]);
     }
 
+    public void prepareSupprimeArtist() {
+    	String[] columns = new String[] {"idArtiste"};
+    	String[] values;
+    	System.out.println("***** Suppression d'une entrée dans la table artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.artiste.suppressionArtiste(Integer.parseInt(values[0]));
+    }
+    
+// AJOUT, SUPPRESSION DANS LA TABLE EXPERT
+    
+    public void prepareExpert() {
+        String[] columns = new String[] {"idArtiste"};
+        String[] values;
+
+        System.out.println("***** Ajout d'une entrée dans la table expert *****");
+        values = this.getValues(columns);
+
+        this.expert.register(Integer.parseInt(values[0]));
+    }
+    
+// AFFICHAGE TABLES
     /**
      * Displays a table given by an sql ResultSet.
      * @param res   The result of the request.
@@ -89,15 +111,6 @@ public class Database{
         }
     }
 
-    public void prepareExpert() {
-        String[] columns = new String[] {"idArtiste"};
-        String[] values;
-
-        System.out.println("***** Ajout d'une entrée dans la table expert *****");
-        values = this.getValues(columns);
-
-        this.expert.register(Integer.parseInt(values[0]));
-    }
 
     private String[] getValues(String[] columns) {
         String[] values = new String[columns.length];

@@ -1,12 +1,12 @@
 --CREATE DATABASE IF NOT EXISTS festival;
 --USE festival;
 
-DROP TABLE expert;
 DROP TABLE planning_artiste;
 DROP TABLE planning_numero;
 DROP TABLE specialite_artiste;
 DROP TABLE pseudo_artiste;
 DROP TABLE evaluation;
+DROP TABLE expert;
 DROP TABLE spectacle;
 DROP TABLE numero;
 DROP TABLE artiste;
@@ -82,5 +82,5 @@ CREATE TABLE evaluation
     idNumero INT NOT NULL REFERENCES numero(idNumero),
     noteExpert INT NOT NULL CHECK(noteExpert BETWEEN 0 and 10),
     evaluationExpert VARCHAR(1000),
-    PRIMARY KEY (idArtiste, idNumero)
+    PRIMARY KEY (idExpert, idNumero)
 );
