@@ -47,7 +47,7 @@ public class Database{
     	String[] values;
     	System.out.println("***** Suppression d'une entrée dans la table artiste *****");
     	values = this.getValues(columns);
-    	
+
     	this.artiste.suppressionArtiste(Integer.parseInt(values[0]));
     }
 
