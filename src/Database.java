@@ -52,29 +52,36 @@ public class Database{
             int m = structure.getColumnCount();
             int[] sizes = new int[m];
             for (int i=0;i<m;i++){
-                sizes[i] = structure.getColumnDisplaySize(i+1);
-                System.out.println(sizes[i]);
+                sizes[i] = 0;
             }
-            ArrayList<String> lines = new ArrayList<String>();
-            String names = " | ";
+            ArrayList<ArrayList<String>> lines = new ArrayList<ArrayList<String>>();
+            ArrayList<String> names = new ArrayList<String>();
             for (int i=0;i<m;i++){
-                names += structure.getColumnLabel(i+1) + " | ";
+                names.add(structure.getColumnLabel(i+1));
+                sizes[i]=structure.getColumnLabel(i+1).length();
             }
             lines.add(names);
-            lines.add(" ");
             while (res.next()){
-                String line = " | ";
+                ArrayList<String> line = new ArrayList<String>();
                 for (int i=0;i<m;i++){
                     String col = res.getString(i+1);
-                    for (int j=0;j<sizes[i]-col.length();j++){
-                        col+=" ";
+                    if (col.length()>sizes[i]){
+                        sizes[i]=col.length();
                     }
-                    line+=col+" | ";
+                    line.add(col);
                 }
                 lines.add(line);
             }
-            for (String line : lines) {
-                System.out.println(line);
+            for (ArrayList<String> line : lines) {
+                String sline = " | ";
+                for (int i=0;i<m;i++){
+                    sline+=line.get(i);
+                    for (int j=0;j<line.get(i).length()-sizes[i];i++){
+                        sline+=" ";
+                    }
+                    sline+=" | ";
+                }
+                System.out.println(sline);
             }
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'affichage d'une table");
