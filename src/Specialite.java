@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.*;
 
 public class Specialite extends Table {
 	Specialite(Connection con, Database db) {
