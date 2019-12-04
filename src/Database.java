@@ -31,7 +31,7 @@ public class Database{
 
         this.sc = new Scanner(System.in);
     }
-// AJOUT, SUPPRESSION DANS LA TABLE ARTISTE
+// AJOUT, SUPPRESSION DANS LA TABLE ARTISTE, toutes testées
     public void prepareArtist() {
         String[] columns = new String[] {"idArtiste", "nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
         String[] values;
@@ -51,7 +51,7 @@ public class Database{
     	this.artiste.suppressionArtiste(Integer.parseInt(values[0]));
     }
 
-// AJOUT, SUPPRESSION DANS LA TABLE PSEUDO_ARTISTE
+// AJOUT, SUPPRESSION DANS LA TABLE PSEUDO_ARTISTE, toutes testées
     public void preparePseudo_Artiste() {
     	int idArtiste;
     	int nombre_pseudos;
@@ -67,7 +67,25 @@ public class Database{
         }
     }
     
-// AJOUT, SUPPRESSION DANS LA TABLE EXPERT
+    public void prepareSupprimePseudo() {
+    	String[] columns = new String[] {"idArtiste", "Pseudo"};
+    	String[] values;
+    	System.out.println("***** Suppression d'une entrée dans la table pseudo_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.pseudo_artiste.suppressionPseudo(Integer.parseInt(values[0]), values[1]);
+    }
+    
+    public void prepareSuppAllPseudo() {
+    	String[] columns = new String[] {"idArtiste"};
+    	String[] values;
+    	System.out.println("***** Suppression d'un artiste dans la table pseudo_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.pseudo_artiste.suppAllPseudo(Integer.parseInt(values[0]));
+    }
+    
+// AJOUT, SUPPRESSION DANS LA TABLE EXPERT testee
     
     public void prepareExpert() {
         String[] columns = new String[] {"idArtiste"};
@@ -79,7 +97,7 @@ public class Database{
         this.expert.register(Integer.parseInt(values[0]));
     }
     
-// AJOUT, SUPPRESSION DANS LA TABLE SPECIALITE
+// AJOUT, SUPPRESSION DANS LA TABLE SPECIALITE, toutes testees
     
     public void prepareSpecialite() {
     	int idArtiste;
@@ -94,6 +112,24 @@ public class Database{
         	String specialite = this.sc.nextLine();
         	this.specialite_artiste.ajoutSpecialite(idArtiste, specialite);
         }
+    }
+    
+    public void prepareSupprimeSpecialite() {
+    	String[] columns = new String[] {"idArtiste", "Specialite"};
+    	String[] values;
+    	System.out.println("***** Suppression d'une entrée dans la table specialite_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.specialite_artiste.suppressionSpecialite(Integer.parseInt(values[0]), values[1]);
+    }
+    
+    public void prepareSuppAllSpecialite() {
+    	String[] columns = new String[] {"idArtiste"};
+    	String[] values;
+    	System.out.println("***** Suppression d'un artiste dans la table specialite_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.specialite_artiste.suppAllSpecialite(Integer.parseInt(values[0]));
     }
     
 // AFFICHAGE TABLES

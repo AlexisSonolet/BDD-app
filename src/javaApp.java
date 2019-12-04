@@ -12,8 +12,8 @@ public class javaApp {
 
 			Database db = new Database(connection);
 			//db.prepareArtist();
-			//db.preparePseudo_Artiste();
-            PreparedStatement c1stm = connection.prepareStatement("SELECT * from pseudo_artiste");
+			db.prepareSuppAllSpecialite();
+            PreparedStatement c1stm = connection.prepareStatement("SELECT * from specialite_artiste");
             ResultSet res1 = c1stm.executeQuery();
             db.printTable(res1);
             res1.close();

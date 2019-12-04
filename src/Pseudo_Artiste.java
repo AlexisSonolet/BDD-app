@@ -1,6 +1,8 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.*;
 
 public class Pseudo_Artiste extends Table{
 	Pseudo_Artiste(Connection con, Database db){
@@ -24,7 +26,7 @@ public class Pseudo_Artiste extends Table{
         try {
 	        PreparedStatement istm = connection.prepareStatement("DELETE FROM pseudo_artiste WHERE idArtiste = ? AND pseudoArtiste = ?");
 	        istm.setInt(1, idArtiste);
-            istm.setString(2, specialite);
+            istm.setString(2, pseudo);
 	        istm.executeQuery();
 	        istm.close();
         } catch (SQLException e) {
