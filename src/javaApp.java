@@ -4,11 +4,18 @@ public class javaApp {
 		try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			String url = "jdbc:oracle:thin:@Oracle1.ensimag.fr:" + "1521:oracle1";
-			String user = "benmansn";
-			String passwd = "benmansn";
+			String user = "pereirap";
+			String passwd = "pereirap";
 			Connection connection = DriverManager.getConnection(url, user, passwd);
+
 			Database db = new Database(connection);
-			db.prepareArtist();
+			//db.prepareArtist();
+
+            PreparedStatement c1stm = connection.prepareStatement("SELECT * from Artiste");
+            ResultSet res1 = c1stm.executeQuery();
+            db.printTable(res1);
+            res1.close();
+            c1stm.close();
 		} catch (SQLException e) {
 			e. printStackTrace ();
 		}

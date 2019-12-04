@@ -11,6 +11,7 @@ public class Artiste extends Table {
 
   public void ajoutArtiste(int idArtiste, String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
     try{
+        System.err.println("Ho");
         PreparedStatement istm = connection.prepareStatement("INSERT into artiste VALUES (?, ?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?)");
         istm.setInt(1, idArtiste);
         istm.setString(2, nomArtiste);

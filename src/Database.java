@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Database{
     Scanner sc;
     Artiste artiste;
-    Table numero;
+    Numero numero;
     Spectacle spectacle;
-    Table planning_artiste;
+    Planning_Artistes planning_artiste;
     Table planning_numero;
     Table specialite_artiste;
     Table pseudo_artiste;
@@ -15,7 +15,7 @@ public class Database{
     Evaluation evaluation;
 
     /**
-     * Sets up a database via the given connection
+     * Sets up a database via the given connection.
      * @param con   The connection to the database
      */
     Database(Connection con){
@@ -46,7 +46,6 @@ public class Database{
      * Displays a table given by an sql ResultSet.
      * @param res   The result of the request.
      */
-
     public void printTable(ResultSet res){
         try {
             ResultSetMetaData structure = res.getMetaData();
@@ -73,12 +72,11 @@ public class Database{
                 }
                 lines.add(line);
             }
-            for (String line : lines){
+            for (String line : lines) {
                 System.out.println(line);
             }
-            res.close();
-        } catch (SQLException e){
-            System.err.println("failed");
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de l'affichage d'une table");
 			e.printStackTrace(System.err);
         }
     }
