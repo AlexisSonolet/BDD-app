@@ -61,14 +61,16 @@ CREATE TABLE planning_numero
 
 CREATE TABLE specialite_artiste
 (
-    idArtiste INT PRIMARY KEY NOT NULL REFERENCES artiste(idArtiste),
-    specialiteArtiste VARCHAR(100)
+    idArtiste INT NOT NULL REFERENCES artiste(idArtiste),
+    specialiteArtiste VARCHAR(100),
+    PRIMARY KEY (idArtiste, specialiteArtist)
 );
 
 CREATE TABLE pseudo_artiste
 (
-    idArtiste INT PRIMARY KEY NOT NULL REFERENCES artiste(idArtiste),
-    pseudoArtiste VARCHAR(100)
+    idArtiste INT NOT NULL REFERENCES artiste(idArtiste),
+    pseudoArtiste VARCHAR(100),
+    PRIMARY KEY (idArtiste, pseudoArtiste)
 );
 
 CREATE TABLE expert
