@@ -79,6 +79,23 @@ public class Database{
         this.expert.register(Integer.parseInt(values[0]));
     }
     
+// AJOUT, SUPPRESSION DANS LA TABLE SPECIALITE
+    
+    public void prepareSpecialite() {
+    	int idArtiste;
+    	int nombre_specialites;
+    	System.out.println("Artiste pour lequel vous souhaitez ajouter la ou les spécialité(s): ");
+        idArtiste = Integer.parseInt(this.sc.nextLine());
+    	System.out.println("Nombre de spécialités que vous souhaitez entrer: ");
+        nombre_specialites = Integer.parseInt(this.sc.nextLine());
+        
+        for (int i = 0; i < nombre_specialites; i ++) {
+        	System.out.println("Spécialité n°" + (i+1) +" que vous souhaitez ajouter");
+        	String specialite = this.sc.nextLine();
+        	this.specialite_artiste.ajoutSpecialite(idArtiste, specialite);
+        }
+    }
+    
 // AFFICHAGE TABLES
     /**
      * Displays a table given by an sql ResultSet.
