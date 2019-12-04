@@ -81,7 +81,7 @@ public class Spectacle extends Table{
             stmt.setString(1, date);
             stmt.setInt(2, heure);
             stmt.setString(3, theme);
-            stmt.setInt(4, idArtiste);
+            stmt.setInt(4, presentateur);
             stmt.setInt(5, prix);
 
             stmt.executeQuery();

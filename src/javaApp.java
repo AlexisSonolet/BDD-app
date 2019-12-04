@@ -9,10 +9,9 @@ public class javaApp {
 			Connection connection = DriverManager.getConnection(url, user, passwd);
 
 			Database db = new Database(connection);
-			db.prepareArtist();
-			db.prepareArtist();
-			db.prepareSupprimeArtist();
-            PreparedStatement c1stm = connection.prepareStatement("SELECT * from Artiste");
+			//db.prepareArtist();
+			//db.preparePseudo_Artiste();
+            PreparedStatement c1stm = connection.prepareStatement("SELECT * from pseudo_artiste");
             ResultSet res1 = c1stm.executeQuery();
             db.printTable(res1);
             res1.close();

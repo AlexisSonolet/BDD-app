@@ -50,6 +50,22 @@ public class Database{
     	
     	this.artiste.suppressionArtiste(Integer.parseInt(values[0]));
     }
+
+// AJOUT, SUPPRESSION DANS LA TABLE PSEUDO_ARTISTE
+    public void preparePseudo_Artiste() {
+    	int idArtiste;
+    	int nombre_pseudos;
+    	System.out.println("Artiste pour lequel vous souhaitez ajouter le ou les pseudo(s): ");
+        idArtiste = Integer.parseInt(this.sc.nextLine());
+    	System.out.println("Nombre de pseudos que vous souhaitez entrer: ");
+        nombre_pseudos = Integer.parseInt(this.sc.nextLine());
+        
+        for (int i = 0; i < nombre_pseudos; i ++) {
+        	System.out.println("Pseudo n°" + (i+1) +" que vous souhaitez ajouter");
+        	String pseudo = this.sc.nextLine();
+        	this.pseudo_artiste.ajoutPseudoArtiste(idArtiste, pseudo);
+        }
+    }
     
 // AJOUT, SUPPRESSION DANS LA TABLE EXPERT
     
