@@ -52,19 +52,20 @@ public class Database{
             int m = structure.getColumnCount();
             int[] sizes = new int[m];
             for (int i=0;i<m;i++){
-                sizes[i] = structure.getColumnDisplaySize(i);
+                sizes[i] = structure.getColumnDisplaySize(i+1);
+                System.out.println(sizes[i]);
             }
             ArrayList<String> lines = new ArrayList<String>();
             String names = " | ";
             for (int i=0;i<m;i++){
-                names += structure.getColumnLabel(i).substring(0, sizes[i]);
+                names += structure.getColumnLabel(i+1) + " | ";
             }
             lines.add(names);
             lines.add(" ");
             while (res.next()){
                 String line = " | ";
                 for (int i=0;i<m;i++){
-                    String col = res.getString(i);
+                    String col = res.getString(i+1);
                     for (int j=0;j<sizes[i]-col.length();j++){
                         col+=" ";
                     }
