@@ -162,9 +162,10 @@ public class Database{
         for (int i = 0; i < nb ; i++) {
             System.out.println("Id d'un numero a ajouter : ");
             listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
+        }
             
         spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
-        }
+        
     }
 
 

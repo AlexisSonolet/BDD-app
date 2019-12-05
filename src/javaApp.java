@@ -122,6 +122,7 @@ public class javaApp {
                 case 2: // Numero
                     break;
                 case 3: // Spectacle
+                    db.prepareSpectacle();
                     break;
                 case 4: // Evaluation
                     break;
