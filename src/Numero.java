@@ -33,8 +33,8 @@ public class Numero extends Table {
 
 		try {
             // Vérifie que idArtistePrincipal est dans idArtistes
-            PreparedStatement c1stm = connection.prepareStatement("SELECT * from Artiste WHERE idArtiste=?;");
-            c1stm.setString(1, ""+idArtistePrincipal);
+            PreparedStatement c1stm = connection.prepareStatement("SELECT * from Artiste WHERE idArtiste=?");
+            c1stm.setInt(1, idArtistePrincipal);
             ResultSet res1 = c1stm.executeQuery();
             if (!res1.next()) {
                 throw new IllegalArgumentException("Unknown artiste");
@@ -45,16 +45,43 @@ public class Numero extends Table {
 
 		    // Requête
 			// Prepare the request
-			String sql = "INSERT INTO numero (themeNumero, nomNumero, resumeNumero, dureeNumero, nbartistes, artistePrincipalNumero, idNumero) VALUES (?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO numero (idNumero, themeNumero, nomNumero, resumeNumero, dureeNumero, nbartistesnumero, artistePrincipalNumero) VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prstmt = connection.prepareStatement(sql);
 			// Fill the variables
-			prstmt.setString(1, Theme);
-			prstmt.setString(2, Nom);
-			prstmt.setString(3, Resume);
-			prstmt.setInt(4, Duree);
-			prstmt.setInt(5, NbArtistes);
-			prstmt.setInt(6, idArtistePrincipal);
-            prstmt.setInt(7, idNumero);
+			prstmt.setInt(1, idNumero);
+			prstmt.setString(2, Theme);
+			prstmt.setString(3, Nom);
+			prstmt.setString(4, Resume);
+			prstmt.setInt(5, Duree);
+			prstmt.setInt(6, NbArtistes);
+			prstmt.setInt(7, idArtistePrincipal);
+            prstmt.executeQuery();
+			prstmt.close();
+		} catch (SQLException e) {
+			System.err.println("failed");
+	        e.printStackTrace(System.err);
+		}
+	}
+	
+	public void suppressionNumero(int idNumero) {
+		try {
+            // Vérifie que idNumero est dans numero
+            PreparedStatement c1stm = connection.prepareStatement("SELECT * from Numero WHERE idNumero=?");
+            c1stm.setInt(1, idNumero);
+            ResultSet res1 = c1stm.executeQuery();
+            if (!res1.next()) {
+                throw new IllegalArgumentException("Ce numéro n'existe pas");
+            }
+
+            c1stm.close();
+            res1.close();
+
+		    // Requête
+			// Prepare the request
+			String sql = "DELETE FROM numero WHERE idNumero = ?";
+			PreparedStatement prstmt = connection.prepareStatement(sql);
+			// Fill the variables
+			prstmt.setInt(1, idNumero);
             prstmt.executeQuery();
 			prstmt.close();
 		} catch (SQLException e) {
