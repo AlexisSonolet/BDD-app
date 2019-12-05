@@ -1,8 +1,8 @@
 import java.sql.*;
 
-public class TableSpectacle extends Table{
+public class Spectacle extends Table{
 	
-	public TableSpectacle(Connection con, Database db){
+	public Spectacle(Connection con, Database db){
 		super(con, db);
 	}
 	
@@ -23,7 +23,8 @@ public class TableSpectacle extends Table{
 	 */
 	public void insert(String date, int heure, String theme, int presentateur,
 			int prix, int[] listeNumeros) throws IllegalArgumentException {
-		//verification des contraintes
+		/*
+        //verification des contraintes
 		if (heure != 9 && heure != 14) {
 			throw new IllegalArgumentException("L'heure d'un spectacle doit etre 9 ou 14, et non : " + heure);
 		}
@@ -59,7 +60,10 @@ public class TableSpectacle extends Table{
 			}
 			//Toutes les contraintes sont vérifiées : l'insertion est valide
 			//On cree un point de sauvegarde au debut de la transaction
-			
+		*/
+        //TODO a virer
+        PreparedStatement stmt;
+        try{
 			//TODO : on enlevera l'autocommit des le debut et faudra virer ca du coup
 			connection.setAutoCommit(false);
 			
