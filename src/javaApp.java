@@ -46,7 +46,7 @@ public class javaApp {
                     javaApp.afficher_table(db, conn, sc);
                     break;
                 case 2: // Ajouter entree
-                    javaApp.ajouter_table(db, conn, sc);
+                    javaApp.ajouter_table(db, sc);
                     break;
                 case 3: // Supprimer entree
 
@@ -59,7 +59,7 @@ public class javaApp {
         }
     }
 
-    private static void ajouter_table(Database db, Connection conn, Scanner sc) {
+    private static void ajouter_table(Database db, Scanner sc) {
         String menu_str = "******* Ajouter une transaction dans une table *******\n";
         menu_str += javaApp.list_tables;
         menu_str += "8. Retour arrière\n";
@@ -73,6 +73,7 @@ public class javaApp {
 
             switch (choix) {
                 case 1: // Artiste
+                    db.prepareArtist();
                     break;
                 case 2: // Numero
                     break;
@@ -81,16 +82,20 @@ public class javaApp {
                 case 4: // Evaluation
                     break;
                 case 5: // Specialite
+                    db.prepareSpecialite();
                     break;
                 case 6: // Pseudo
+                    db.preparePseudo_Artiste();
                     break;
                 case 7: // Expert
+                    db.prepareExpert();
                     break;
                 case 8: // Retour
                     break;
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
             }
+        }
     }
 
     private static void afficher_table(Database db, Connection conn, Scanner sc) {
