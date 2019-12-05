@@ -9,8 +9,8 @@ public class Database{
     Spectacle spectacle;
     Planning_Artistes planning_artiste;
     Table planning_numero;
-    Table specialite_artiste;
-    Table pseudo_artiste;
+    Specialite specialite_artiste;
+    Pseudo_Artiste pseudo_artiste;
     Expert expert;
     Evaluation evaluation;
 
@@ -23,9 +23,9 @@ public class Database{
         numero = new Numero(con,this);
         spectacle = new Spectacle(con,this);
         planning_artiste = new Planning_Artistes(con,this);
-        // planning_numero = new Planning_Numero(con,this);
-        // specialite_artiste = new Specialite_Artiste(con,this);
-        // pseudo_artiste = new Pseudo_Artiste(con,this);
+        //planning_numero = new Planning_Numero(con,this);
+        specialite_artiste = new Specialite(con,this);
+        pseudo_artiste = new Pseudo_Artiste(con,this);
         expert = new Expert(con,this);
         evaluation = new Evaluation(con,this);
 
