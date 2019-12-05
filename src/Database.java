@@ -9,8 +9,8 @@ public class Database{
     Spectacle spectacle;
     Planning_Artistes planning_artiste;
     Table planning_numero;
-    Specialite specialite_artiste;
-    Pseudo_Artiste pseudo_artiste;
+    Table specialite_artiste;
+    Table pseudo_artiste;
     Expert expert;
     Evaluation evaluation;
 
@@ -24,14 +24,14 @@ public class Database{
         spectacle = new Spectacle(con,this);
         planning_artiste = new Planning_Artistes(con,this);
         // planning_numero = new Planning_Numero(con,this);
-        specialite_artiste = new Specialite(con,this);
-        pseudo_artiste = new Pseudo_Artiste(con,this);
+        // specialite_artiste = new Specialite_Artiste(con,this);
+        // pseudo_artiste = new Pseudo_Artiste(con,this);
         expert = new Expert(con,this);
         evaluation = new Evaluation(con,this);
 
         this.sc = new Scanner(System.in);
     }
-// AJOUT, SUPPRESSION DANS LA TABLE ARTISTE, toutes testées
+
     public void prepareArtist() {
         String[] columns = new String[] {"idArtiste", "nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
         String[] values;
@@ -226,7 +226,7 @@ public class Database{
                 String sline = " | ";
                 for (int i=0;i<m;i++){
                     sline+=line.get(i);
-                    for (int j=0;j<sizes[i]-line.get(i).length();j++){
+                    for (int j=0;j<line.get(i).length()-sizes[i];i++){
                         sline+=" ";
                     }
                     sline+=" | ";
@@ -238,7 +238,6 @@ public class Database{
 			e.printStackTrace(System.err);
         }
     }
-
 
     private String[] getValues(String[] columns) {
         String[] values = new String[columns.length];

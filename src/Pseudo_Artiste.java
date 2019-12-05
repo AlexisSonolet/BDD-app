@@ -60,4 +60,23 @@ public class Pseudo_Artiste extends Table{
             e.printStackTrace(System.err);
         }
     }
+
+    public ArrayList<Integer> recherche_pseudo(String pseudo){
+        try{
+            PreparedStatement stm = connection.prepareStatement("SELECT idArtiste FROM pseudo_artiste WHERE pseudoArtiste = ?");
+            stm.setString(1, pseudo);
+            ResultSet res = stm.executeQuery();
+            ArrayList<Integer> artists = new ArrayList<Integer>();
+            while (res.next()){
+                artists.add(res.getInt(1));
+            }
+            res.close();
+            stm.close();
+            return artists;
+        } catch (SQLException e){
+            System.err.println("failed");
+            e.printStackTrace(System.err);
+            return new ArrayList<Integer>();
+        }
+    }
 }
