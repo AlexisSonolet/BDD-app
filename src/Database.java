@@ -152,7 +152,45 @@ public class Database{
     	
     	this.specialite_artiste.suppAllSpecialite(Integer.parseInt(values[0]));
     }
-    
+ 
+//SPECTACLES
+
+    public void prepareSpectacle() {
+        String date;
+        int heure;
+        String theme;
+        int presentateur;
+        int prix;
+        int[] listeNumeros;
+        
+    	
+        System.out.println("***** Ajout d'un spectacle dans la table spectacle, "
+                + "et de son planning dans la table planning_numero *****");
+        
+    	String[] columns = new String[] {"Date (AAAA-MM-JJ)", "Heure (9 ou 14)", "Theme", "Presentateur", "Prix"};
+        String[] values = this.getValues(columns);
+        
+        date = values[0];
+        heure = Integer.parseInt(values[1]);
+        theme = values[2];
+        presentateur = Integer.parseInt(values[3]);
+        prix = Integer.parseInt(values[4]);
+
+        System.out.println("Nombre de numeros a ajouter : ");
+        int nb = Integer.parseInt(this.sc.nextLine());
+        listeNumeros = new int[nb];
+
+        for (int i = 0; i < nb ; i++) {
+            System.out.println("Id d'un numero a ajouter : ");
+            listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
+        }
+            
+        spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
+        
+    }
+
+
+
 // AFFICHAGE TABLES
     /**
      * Displays a table given by an sql ResultSet.
