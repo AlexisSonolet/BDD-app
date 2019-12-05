@@ -72,7 +72,7 @@ public class javaApp {
                         stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY idNumero");
                         break;
                     case 3: // Spectacle
-                        stmt = conn.prepareStatement("SELECT * FROM spectacle ORDER BY (dateSpectacle, heureSpectacle)");
+                        stmt = conn.prepareStatement("SELECT * FROM spectacle ORDER BY dateSpectacle, heureSpectacle");
                         break;
                     case 4: // Retour
                         break;
