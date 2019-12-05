@@ -42,6 +42,135 @@ public class Database{
         this.artiste.ajoutArtiste(Integer.parseInt(values[0]), values[1], values[2], values[3], values[4], values[5]);
     }
 
+    public void prepareSupprimeArtist() {
+    	String[] columns = new String[] {"idArtiste"};
+    	String[] values;
+    	System.out.println("***** Suppression d'une entrée dans la table artiste *****");
+    	values = this.getValues(columns);
+
+    	this.artiste.suppressionArtiste(Integer.parseInt(values[0]));
+    }
+
+// AJOUT, SUPPRESSION DANS LA TABLE PSEUDO_ARTISTE, toutes testées
+    public void preparePseudo_Artiste() {
+    	int idArtiste;
+    	int nombre_pseudos;
+    	System.out.println("Artiste pour lequel vous souhaitez ajouter le ou les pseudo(s): ");
+        idArtiste = Integer.parseInt(this.sc.nextLine());
+    	System.out.println("Nombre de pseudos que vous souhaitez entrer: ");
+        nombre_pseudos = Integer.parseInt(this.sc.nextLine());
+        
+        for (int i = 0; i < nombre_pseudos; i ++) {
+        	System.out.println("Pseudo n°" + (i+1) +" que vous souhaitez ajouter");
+        	String pseudo = this.sc.nextLine();
+        	this.pseudo_artiste.ajoutPseudoArtiste(idArtiste, pseudo);
+        }
+    }
+    
+    public void prepareSupprimePseudo() {
+    	String[] columns = new String[] {"idArtiste", "Pseudo"};
+    	String[] values;
+    	System.out.println("***** Suppression d'une entrée dans la table pseudo_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.pseudo_artiste.suppressionPseudo(Integer.parseInt(values[0]), values[1]);
+    }
+    
+    public void prepareSuppAllPseudo() {
+    	String[] columns = new String[] {"idArtiste"};
+    	String[] values;
+    	System.out.println("***** Suppression d'un artiste dans la table pseudo_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.pseudo_artiste.suppAllPseudo(Integer.parseInt(values[0]));
+    }
+    
+// AJOUT, SUPPRESSION DANS LA TABLE EXPERT testee
+    
+    public void prepareExpert() {
+        String[] columns = new String[] {"idArtiste"};
+        String[] values;
+
+        System.out.println("***** Ajout d'une entrée dans la table expert *****");
+        values = this.getValues(columns);
+
+        this.expert.register(Integer.parseInt(values[0]));
+    }
+    
+// AJOUT, SUPPRESSION DANS LA TABLE SPECIALITE, toutes testees
+    
+    public void prepareSpecialite() {
+    	int idArtiste;
+    	int nombre_specialites;
+    	System.out.println("Artiste pour lequel vous souhaitez ajouter la ou les spécialité(s): ");
+        idArtiste = Integer.parseInt(this.sc.nextLine());
+    	System.out.println("Nombre de spécialités que vous souhaitez entrer: ");
+        nombre_specialites = Integer.parseInt(this.sc.nextLine());
+        
+        for (int i = 0; i < nombre_specialites; i ++) {
+        	System.out.println("Spécialité n°" + (i+1) +" que vous souhaitez ajouter");
+        	String specialite = this.sc.nextLine();
+        	this.specialite_artiste.ajoutSpecialite(idArtiste, specialite);
+        }
+    }
+    
+    public void prepareSupprimeSpecialite() {
+    	String[] columns = new String[] {"idArtiste", "Specialite"};
+    	String[] values;
+    	System.out.println("***** Suppression d'une entrée dans la table specialite_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.specialite_artiste.suppressionSpecialite(Integer.parseInt(values[0]), values[1]);
+    }
+    
+    public void prepareSuppAllSpecialite() {
+    	String[] columns = new String[] {"idArtiste"};
+    	String[] values;
+    	System.out.println("***** Suppression d'un artiste dans la table specialite_artiste *****");
+    	values = this.getValues(columns);
+    	
+    	this.specialite_artiste.suppAllSpecialite(Integer.parseInt(values[0]));
+    }
+ 
+//SPECTACLES
+
+    public void prepareSpectacle() {
+        String date;
+        int heure;
+        String theme;
+        int presentateur;
+        int prix;
+        int[] listeNumeros;
+        
+    	
+        System.out.println("***** Ajout d'un spectacle dans la table spectacle, "
+                + "et de son planning dans la table planning_numero *****");
+        
+    	String[] columns = new String[] {"Date (AAAA-MM-JJ)", "Heure (9 ou 14)", "Theme", "Presentateur", "Prix"};
+        String[] values = this.getValues(columns);
+        
+        date = values[0];
+        heure = Integer.parseInt(values[1]);
+        theme = values[2];
+        presentateur = Integer.parseInt(values[3]);
+        prix = Integer.parseInt(values[4]);
+
+        System.out.println("Nombre de numeros a ajouter : ");
+        int nb = Integer.parseInt(this.sc.nextLine());
+        listeNumeros = new int[nb];
+
+        for (int i = 0; i < nb ; i++) {
+            System.out.println("Id d'un numero a ajouter : ");
+            listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
+        }
+            
+        spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
+        
+    }
+
+
+
+// AFFICHAGE TABLES
     /**
      * Displays a table given by an sql ResultSet.
      * @param res   The result of the request.
@@ -87,16 +216,6 @@ public class Database{
             System.err.println("Erreur lors de l'affichage d'une table");
 			e.printStackTrace(System.err);
         }
-    }
-
-    public void prepareExpert() {
-        String[] columns = new String[] {"idArtiste"};
-        String[] values;
-
-        System.out.println("***** Ajout d'une entrée dans la table expert *****");
-        values = this.getValues(columns);
-
-        this.expert.register(Integer.parseInt(values[0]));
     }
 
     private String[] getValues(String[] columns) {
