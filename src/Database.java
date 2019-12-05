@@ -153,8 +153,7 @@ public class Database{
     	this.specialite_artiste.suppAllSpecialite(Integer.parseInt(values[0]));
     }
  
-//SPECTACLES
-//prepareSpectacle TESTE et VALIDE
+//SPECTACLES toutes VALIDEES
     public void prepareSpectacle() {
         String date;
         int heure;
@@ -188,7 +187,29 @@ public class Database{
         spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
         
     }
-//TODO : ajouter des numeros aux spectacles (ne modifie que le planning)
+    
+    public void prepareInsertNumerosDansSpectacle(){
+        String date;
+        int heure;
+        int[] listeNumeros;
+    	System.out.println("***** Ajout de numeros dans un spectacle *****");
+        String[] columns = new String[] {"Date du spectacle", "Heure du spectacle"};
+        String[] values = this.getValues(columns);
+
+        date = values[0];
+        heure = Integer.parseInt(values[1]);
+        
+        System.out.println("Nombre de numeros a ajouter : ");
+        int nb = Integer.parseInt(this.sc.nextLine());
+        listeNumeros = new int[nb];
+
+        for (int i = 0; i < nb ; i++) {
+            System.out.println("Id d'un numero a ajouter : ");
+            listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
+        }
+
+        this.spectacle.insertNewNumerosToSpectacle(date, heure, listeNumeros);
+    }
 
 
 // AFFICHAGE TABLES
