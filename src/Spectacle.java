@@ -39,29 +39,29 @@ public class Spectacle extends Table{
 			PreparedStatement stmt = connection.prepareStatement("SELECT * FROM artiste WHERE idArtiste = ? ");
             stmt.setInt(1, presentateur);
 			ResultSet res = stmt.executeQuery();
-            stmt.close();
 
-			if (!res.next()) {
+			if (!res.isBeforeFirst()) {
 				throw new IllegalArgumentException("idArtiste du presentateur invalide : " + presentateur);
 			}
             res.close();
+            stmt.close();
 
 			for (int num : listeNumeros) {
 				stmt = connection.prepareStatement("SELECT * FROM numero WHERE idNumero = ? ");
                 stmt.setInt(1, num);
 				res = stmt.executeQuery();
-				if (!res.next()) {
+				if (!res.isBeforeFirst()) {
 					throw new IllegalArgumentException("au moins un idNumero invalide : " + num);
 				}
                 stmt.close();
                 res.close();
 
-				stmt = connection.prepareStatement("SELECT theme FROM numero WHERE idNumero = ? ");
+				stmt = connection.prepareStatement("SELECT themeNumero FROM numero WHERE idNumero = ? ");
                 stmt.setInt(1, num);
 				res = stmt.executeQuery();
 				res.next();
-				String themeNum = res.getString(1);
-				if (theme.equals(themeNum)) {
+				String themeNum = res.getString("themeNumero");
+				if (!theme.equals(themeNum)) {
 					throw new IllegalArgumentException("au moins un numero a un theme different de "
 							+ "celui du spectacle. Theme du spectacle : " + theme + " ; theme du "
 							+ "numero : " + themeNum);
@@ -69,6 +69,17 @@ public class Spectacle extends Table{
                 stmt.close();
                 res.close();
 			}
+
+            stmt = connection.prepareStatement("INSERT INTO spectacle VALUES (TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?)");
+            stmt.setString(1, date);
+            stmt.setInt(2, heure);
+            stmt.setString(3, theme);
+            stmt.setInt(4, presentateur);
+            stmt.setInt(5, prix);
+
+            stmt.executeUpdate();
+            stmt.close();
+            
 
             // Creation de la requete
             for (int num : listeNumeros) {
@@ -81,15 +92,6 @@ public class Spectacle extends Table{
                 stmt.close();
             }
 
-            stmt = connection.prepareStatement("INSERT INTO spectacle VALUES (TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?, ?");
-            stmt.setString(1, date);
-            stmt.setInt(2, heure);
-            stmt.setString(3, theme);
-            stmt.setInt(4, presentateur);
-            stmt.setInt(5, prix);
-
-            stmt.executeUpdate();
-            stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

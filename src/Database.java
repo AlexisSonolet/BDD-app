@@ -154,7 +154,7 @@ public class Database{
     }
  
 //SPECTACLES
-
+//prepareSpectacle TESTE et VALIDE
     public void prepareSpectacle() {
         String date;
         int heure;
@@ -188,7 +188,7 @@ public class Database{
         spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
         
     }
-
+//TODO : ajouter des numeros aux spectacles (ne modifie que le planning)
 
 
 // AFFICHAGE TABLES
