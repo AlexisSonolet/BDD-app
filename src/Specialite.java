@@ -13,7 +13,7 @@ public class Specialite extends Table {
 		try{
 	        PreparedStatement istm = connection.prepareStatement("INSERT into specialite_artiste VALUES (?, ?)");
 	        istm.setInt(1, idArtiste);
-	        istm.setString(2, specialite);
+	        istm.setString(2, specialite.toLowerCase());
 	        istm.executeQuery();
 	        istm.close();
 		} catch (SQLException e) {
@@ -26,7 +26,7 @@ public class Specialite extends Table {
         try {
 	        PreparedStatement istm = connection.prepareStatement("DELETE FROM specialite_artiste WHERE idArtiste = ? AND specialiteArtiste = ?");
 	        istm.setInt(1, idArtiste);
-            istm.setString(2, specialite);
+            istm.setString(2, specialite.toLowerCase());
 	        istm.executeQuery();
 	        istm.close();
         } catch (SQLException e) {
@@ -58,6 +58,25 @@ public class Specialite extends Table {
 
         } catch (SQLException e) {
             e.printStackTrace(System.err);
+        }
+    }
+
+    public ArrayList<Integer> recherche_specialite(String specialite){
+        try{
+            PreparedStatement stm = connection.prepareStatement("SELECT idArtiste FROM specialite_artiste WHERE specialite = ?");
+            stm.setString(1, specialite.toLowerCase());
+            ResultSet res = stm.executeQuery();
+            ArrayList<Integer> artists = new ArrayList<Integer>();
+            while (res.next()){
+                artists.add(res.getInt(1));
+            }
+            res.close();
+            stm.close();
+            return artists;
+        } catch (SQLException e){
+            System.err.println("failed");
+            e.printStackTrace(System.err);
+            return new ArrayList<Integer>();
         }
     }
 }

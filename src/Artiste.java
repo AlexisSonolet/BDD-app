@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.*;
 
 public class Artiste extends Table {
@@ -16,7 +17,7 @@ public class Artiste extends Table {
         istm.setString(2, nomArtiste);
         istm.setString(3, prenomArtiste);
         istm.setString(4, dateNaissance);
-        istm.setString(5, cirqueArtiste);
+        istm.setString(5, cirqueArtiste.toLowerCase());
         istm.setString(6, telephoneArtiste);
         istm.executeQuery();
         istm.close();
@@ -36,5 +37,43 @@ public class Artiste extends Table {
 	        System.err.println("failed");
 	        e.printStackTrace(System.err);
 	    }
+  }
+
+  public ArrayList<Integer> recherche_prenom(String prenom){
+    try{
+      PreparedStatement stm = connection.prepareStatement("SELECT idArtiste FROM artiste WHERE prenomArtiste = ?");
+      stm.setString(1, prenom);
+      ResultSet res = stm.executeQuery();
+      ArrayList<Integer> artists = new ArrayList<Integer>();
+      while (res.next()){
+        artists.add(res.getInt(1));
+      }
+      res.close();
+      stm.close();
+      return artists;
+    } catch (SQLException e){
+      System.err.println("failed");
+      e.printStackTrace(System.err);
+      return new ArrayList<Integer>();
+    }
+  }
+
+  public ArrayList<Integer> recherche_nom(String nom){
+    try{
+      PreparedStatement stm = connection.prepareStatement("SELECT idArtiste FROM artiste WHERE nomArtiste = ?");
+      stm.setString(1, nom);
+      ResultSet res = stm.executeQuery();
+      ArrayList<Integer> artists = new ArrayList<Integer>();
+      while (res.next()){
+        artists.add(res.getInt(1));
+      }
+      res.close();
+      stm.close();
+      return artists;
+    } catch (SQLException e){
+      System.err.println("failed");
+      e.printStackTrace(System.err);
+      return new ArrayList<Integer>();
+    }
   }
 }
