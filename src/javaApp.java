@@ -49,7 +49,11 @@ public class javaApp {
                     javaApp.ajouter_table(db, sc);
                     break;
                 case 3: // Supprimer entree
+<<<<<<< HEAD
+                	javaApp.supprimer_table(db, sc);
+=======
                     javaApp.supprimer_table(db, sc);
+>>>>>>> d03f85e2cd88d29dabe2da70a1c5f85812bac212
                     break;
                 case 4: // Quitter
                     break;
@@ -120,6 +124,47 @@ public class javaApp {
                     db.prepareArtist();
                     break;
                 case 2: // Numero
+                	db.prepareNumero();
+                    break;
+                case 3: // Spectacle
+                    break;
+                case 4: // Evaluation
+                    break;
+                case 5: // Specialite
+                    db.prepareSpecialite();
+                    break;
+                case 6: // Pseudo
+                    db.preparePseudo_Artiste();
+                    break;
+                case 7: // Expert
+                    db.prepareExpert();
+                    break;
+                case 8: // Retour
+                    break;
+                default:
+                    System.out.println("Mauvaise entrée ...\n\n");
+            }
+        }
+    }
+    
+    private static void supprimer_table(Database db, Scanner sc) {
+        String menu_str = "******* Supprimer une transaction dans une table *******\n";
+        menu_str += javaApp.list_tables;
+        menu_str += "8. Retour arrière\n";
+
+        int choix = 0;
+        PreparedStatement stmt = null;
+        while (choix != 8) {
+            System.out.println(menu_str);
+            System.out.print("Votre choix : ");
+            choix = Integer.parseInt(sc.nextLine());
+
+            switch (choix) {
+                case 1: // Artiste
+                    db.prepareSupprimeArtist();
+                    break;
+                case 2: // Numero
+                	db.prepareSupprimeNumero();
                     break;
                 case 3: // Spectacle
                     db.prepareSpectacle();

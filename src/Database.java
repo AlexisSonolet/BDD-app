@@ -85,6 +85,27 @@ public class Database{
     	this.pseudo_artiste.suppAllPseudo(Integer.parseInt(values[0]));
     }
     
+// AJOUT, SUPPRESSION DANS LA TABLE NUMERO, aucune testée
+    public void prepareNumero() {
+        String[] columns = new String[] {"idNumero", "Theme", "Nom", "Resume", "Duree", "NbArtistes", "idArtistePrincipal"};
+        String[] values;     
+
+        System.out.println("***** Ajout d'une entrée dans la table numéro *****");
+        values = this.getValues(columns);
+
+        this.numero.insert(values[1], values[2], values[3], Integer.parseInt(values[4]), Integer.parseInt(values[5]),
+        		Integer.parseInt(values[6]), Integer.parseInt(values[0]));
+    }
+
+    public void prepareSupprimeNumero() {
+    	String[] columns = new String[] {"idNumero"};
+    	String[] values;
+    	System.out.println("***** Suppression d'une entrée dans la table numéro *****");
+    	values = this.getValues(columns);
+
+    	this.numero.suppressionNumero(Integer.parseInt(values[0]));
+    }
+    
 // AJOUT, SUPPRESSION DANS LA TABLE EXPERT testee
     
     public void prepareExpert() {
