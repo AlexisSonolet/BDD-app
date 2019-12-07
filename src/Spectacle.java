@@ -21,7 +21,7 @@ public class Spectacle extends Table{
      * presentateur du spectacle joue dans l'un des numeros
      * @throws SQLException : si une erreur SQL se produit
      */
-    private void checkOneNumero(int num, String theme, int presentateur) throws IllegalArgumentException, SQLException {
+    private void checkOneNumero(int num, String theme, int presentateur, String date, int heure) throws IllegalArgumentException, SQLException {
         //On verifie que l'id du numero est valide
         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM numero WHERE idNumero = ? ");
         stmt.setInt(1, num);
@@ -70,10 +70,13 @@ public class Spectacle extends Table{
         //On verifie que l'ajout de ce numero ne depasse pas la limite de 180 min par spectacle
         //On commence par regarder la duree actuelle du spectacle
         stmt = connection.prepareStatement("SELECT SUM(dureeNumero) FROM planning_numero JOIN numero "
-                + "ON (numero.idNumero = planing_numero.idNumero) WHERE idNumero = ?");
-        stmt.setInt(1, num);
+                + "ON (numero.idNumero = planning_numero.idNumero) WHERE dateSpectacle = TO_DATE(?, "
+                + "'YYYY-MM-DD') AND heureSpectacle = ?");
+        stmt.setString(1, date);
+        stmt.setInt(2, heure);
         res = stmt.executeQuery();
-        int dureeSpectacle = res.getInt("SUM(duereeNumero)");
+        res.next();
+        int dureeSpectacle = res.getInt("SUM(dureeNumero)");
 
         //On se sert ici de la duree du numero, recuperee plus tot
         if (dureeSpectacle + dureeNumero > 180) {
@@ -92,9 +95,9 @@ public class Spectacle extends Table{
      * presentateur joue dans l'un des numeros
      * @throws SQLException : si une erreur SQL se produit
      */
-    private void checkMultipleNumeros(int[] listeNumeros, String theme, int presentateur) throws IllegalArgumentException, SQLException {
+    private void checkMultipleNumeros(int[] listeNumeros, String theme, int presentateur, String date, int heure) throws IllegalArgumentException, SQLException {
 		for (int num : listeNumeros) {
-		    checkOneNumero(num, theme, presentateur);
+		    checkOneNumero(num, theme, presentateur, date, heure);
         }   
     }
 
@@ -194,7 +197,7 @@ public class Spectacle extends Table{
     
     private int getPresentateur(String date, int heure) throws SQLException {
         PreparedStatement stmt = connection.prepareStatement("SELECT presentateurSpectacle FROM spectacle "
-                + "WHERE dateSpectacle = TO_DATE(?, YYYY-MM-DD) AND heureSpectacle = ?");
+                + "WHERE dateSpectacle = TO_DATE(?, 'YYYY-MM-DD') AND heureSpectacle = ?");
         stmt.setString(1, date);
         stmt.setInt(2, heure);
         ResultSet res = stmt.executeQuery();
@@ -279,12 +282,12 @@ public class Spectacle extends Table{
     private Object[] getSpectacleOf(int num) throws SQLException {
         Object[] spectacle = new Object[2];
         
-        PreparedStatement stmt = connection.prepareStatement("SELECT TO_CHAR(dateSpectacle, YYYY-MM-DD), heureSpectacle "
-                 + "FROM planning_numero WHERE idNumero = ?");
+        PreparedStatement stmt = connection.prepareStatement("SELECT TO_CHAR(dateSpectacle, 'YYYY-MM-DD') AS "
+                 + "dateDuSpectacle, heureSpectacle FROM planning_numero WHERE idNumero = ?");
         stmt.setInt(1, num);
         ResultSet res = stmt.executeQuery();
         res.next();
-        spectacle[0] = res.getString("dateSpectacle");
+        spectacle[0] = res.getString("dateDuSpectacle");
         spectacle[1] = res.getInt("heureSpectacle");
 
         res.close();
@@ -296,7 +299,7 @@ public class Spectacle extends Table{
     
     private int getNumberOfNumerosInSpectacle(String date, int heure) throws SQLException {
         PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(idNumero) FROM planning_numero "
-                + "WHERE dateSpectacle = TO_DATE(?, YYYY-MM-DD) AND heureSpectacle = ?");
+                + "WHERE dateSpectacle = TO_DATE(?, 'YYYY-MM-DD') AND heureSpectacle = ?");
         stmt.setString(1, date);
         stmt.setInt(2, heure);
         ResultSet res = stmt.executeQuery();
@@ -384,7 +387,7 @@ public class Spectacle extends Table{
             }
 
             checkPresentateur(presentateur);
-            checkMultipleNumeros(listeNumeros, theme, presentateur);
+            checkMultipleNumeros(listeNumeros, theme, presentateur, date, heure);
             
             //Les contraintes sont toutes verifiees
             // Creation de la requete
@@ -429,7 +432,7 @@ public class Spectacle extends Table{
             //On verifie que les numeros qu'on ajoute ont le bon theme et qu'ils sont valides
             //Pour cela on recupere le presentateur du spectacle
             int presentateur = getPresentateur(dateSpectacle, heureSpectacle);
-            checkMultipleNumeros(listeNumeros, theme, presentateur);
+            checkMultipleNumeros(listeNumeros, theme, presentateur, dateSpectacle, heureSpectacle);
 
             //Les contraintes sont verifiees, on cree la requete d'insertion
             insertMultipleNumerosIntoPlanning(dateSpectacle, heureSpectacle, listeNumeros);

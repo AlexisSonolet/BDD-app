@@ -19,6 +19,7 @@ public class javaApp {
 			String user = "pereirap";
 			String passwd = "pereirap";
 			Connection connection = DriverManager.getConnection(url, user, passwd);
+            connection.setAutoCommit(false);
 
 			Database db = new Database(connection);
             javaApp.menu(db, connection);
@@ -68,10 +69,11 @@ public class javaApp {
         menu_str += javaApp.list_tables;
         menu_str += "8. Supprimer tous les pseudos d'un artiste\n";
         menu_str += "9. Supprimer toutes les spécialités d'un artiste\n";
-        menu_str += "10. Retour arrière\n";
+        menu_str += "10. Planning des spectacles\n";
+        menu_str += "11. Retour arrière\n";
 
         int choix = 0;
-        while (choix != 10) {
+        while (choix != 11) {
             System.out.println(menu_str);
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
@@ -103,6 +105,9 @@ public class javaApp {
                     db.prepareSuppAllSpecialite();
                     break;
                 case 10: // Retour
+                    db.prepareSuppressionNumerosDansSpectacle();
+                    break;
+                case 11: //Retour
                     break;
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");

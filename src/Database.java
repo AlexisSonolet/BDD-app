@@ -23,7 +23,6 @@ public class Database{
         numero = new Numero(con,this);
         spectacle = new Spectacle(con,this);
         planning_artiste = new Planning_Artistes(con,this);
-        //planning_numero = new Planning_Numero(con,this);
         specialite_artiste = new Specialite(con,this);
         pseudo_artiste = new Pseudo_Artiste(con,this);
         expert = new Expert(con,this);
@@ -219,6 +218,23 @@ public class Database{
         }
 
         this.spectacle.insertNewNumerosToSpectacle(date, heure, listeNumeros);
+    }
+
+    public void prepareSuppressionNumerosDansSpectacle() {
+        int[] listeNumeros;
+
+    	System.out.println("***** Suppression de numeros dans un spectacle *****");
+        
+        System.out.println("Nombre de numeros a supprimer : ");
+        int nb = Integer.parseInt(this.sc.nextLine());
+        listeNumeros = new int[nb];
+
+        for (int i = 0; i < nb ; i++) {
+            System.out.println("Id d'un numero a supprimer : ");
+            listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
+        }
+
+        this.spectacle.deleteNumerosFromPlanning(listeNumeros);
     }
 
 
