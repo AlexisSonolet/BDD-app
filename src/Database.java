@@ -88,7 +88,7 @@ public class Database{
 // AJOUT, SUPPRESSION DANS LA TABLE NUMERO, aucune testée
     public void prepareNumero() {
         String[] columns = new String[] {"idNumero", "Theme", "Nom", "Resume", "Duree", "NbArtistes", "idArtistePrincipal"};
-        String[] values;     
+        String[] values;
 
         System.out.println("***** Ajout d'une entrée dans la table numéro *****");
         values = this.getValues(columns);
@@ -116,6 +116,16 @@ public class Database{
         values = this.getValues(columns);
 
         this.expert.register(Integer.parseInt(values[0]));
+    }
+
+    public void prepareSupprimeExpert() {
+        String[] columns = new String[] {"idExpert"};
+        String[] values;
+
+        System.out.println("***** Suppression d'une entrée dans la table expert *****");
+        values = this.getValues(columns);
+
+        this.expert.supprimerExpert(Integer.parseInt(values[0]));
     }
     
 // AJOUT, SUPPRESSION DANS LA TABLE SPECIALITE, toutes testees
