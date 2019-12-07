@@ -94,6 +94,7 @@ public class javaApp {
                     db.prepareSupprimePseudo();
                     break;
                 case 7: // Expert
+                    db.prepareSupprimeExpert();
                     break;
                 case 8: // All pseudos
                     db.prepareSuppAllPseudo();
@@ -125,7 +126,7 @@ public class javaApp {
                     db.prepareArtist();
                     break;
                 case 2: // Numero
-                	db.prepareNumero();
+                    db.prepareNumero();
                     break;
                 case 3: // Spectacle
                     db.prepareSpectacle();

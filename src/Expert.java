@@ -7,10 +7,23 @@ public class Expert extends Table {
     }
 
     /**
+     * Delete the expert from the table.
+     */
+    public void supprimerExpert(int idArtiste) {
+        try {
+	        PreparedStatement istm = connection.prepareStatement("DELETE FROM expert WHERE idExpert = ?");
+	        istm.setInt(1, idArtiste);
+	        istm.executeQuery();
+	        istm.close();
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+        }
+    }
+
+    /**
      * Registers Artist as an Expert if allowed. Raises Exception if not allowed.
      * @param idArtiste The id of the artist to be registered as an expert.
      */
-
     public void register(int idArtiste){
 		try {
             // Check if this is actually an artist.
