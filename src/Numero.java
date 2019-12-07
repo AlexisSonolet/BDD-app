@@ -88,4 +88,44 @@ public class Numero extends Table {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Rentre l'évaluation et la note globale du numéro. Permet aussi de la modifier.
+	 * @param idNumero	L'identifiant du numéro à évaluer
+	 * @param evaluation	Son évaluation
+	 * @param note	Sa note
+	 */
+
+	public void evaluationNumero(int idNumero, String evaluation, float note){
+		try {
+            // Vérifie que idNumero est dans numero
+            PreparedStatement c1stm = connection.prepareStatement("SELECT * from Numero WHERE idNumero=?");
+            c1stm.setInt(1, idNumero);
+            ResultSet res1 = c1stm.executeQuery();
+            if (!res1.next()) {
+                throw new IllegalArgumentException("Ce numéro n'existe pas");
+            }
+
+            c1stm.close();
+			res1.close();
+			
+			// Vérifie que la note est entre 0 et 10
+			if (note<0 || note>10){
+				throw new IllegalArgumentException("La note doit être entre 0 et 10");
+			}
+
+			// Prepare the request
+			String sql = "UPDATE Numero SET (noteNumero = ?, evaluationNumero = ?) WHERE idNumero = ?");
+			PreparedStatement prstmt = connection.prepareStatement(sql);
+
+			prstmt.setFloat(1, note);
+			prstmt.setString(2, evaluation);
+			prstmt.setInt(3, idNumero);
+            prstmt.executeQuery();
+			prstmt.close();
+		} catch (SQLException e) {
+			System.err.println("failed");
+			e.printStackTrace();
+		}
+	}
 }

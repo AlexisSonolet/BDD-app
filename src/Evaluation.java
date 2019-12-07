@@ -158,7 +158,7 @@ public class Evaluation extends Table{
 
     public void commit(){
         if (registered==-1){
-            throw new IllegalArgumentException("Not evenn evaluating");
+            throw new IllegalArgumentException("Not even evaluating");
         }
         if (registered<5){
             throw new IllegalArgumentException("Not all experts have sent their evaluation");
@@ -167,8 +167,8 @@ public class Evaluation extends Table{
             for (int i=0;i<5;i++){
                 PreparedStatement stm = connection.prepareStatement("INSERT INTO Evaluation VALUES (?,?,?,?)");
                 stm.setString(1, ""+experts[i]);
-                stm.setString(2, ""+idNumero);
-                stm.setString(3, ""+notes[i]);
+                stm.setInt(2, idNumero);
+                stm.setFloat(3, notes[i]);
                 stm.setString(4, evaluations[i]);
                 stm.executeQuery();
                 stm.close();

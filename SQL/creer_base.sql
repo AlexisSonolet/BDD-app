@@ -29,7 +29,7 @@ CREATE TABLE numero
     resumeNumero VARCHAR(1000),
     artistePrincipalNumero REFERENCES artiste(idArtiste),
     dureeNumero INT CHECK(dureeNumero >= 0),
-    noteNumero INT CHECK(noteNumero BETWEEN 0 and 10),
+    noteNumero FLOAT CHECK(noteNumero BETWEEN 0 and 10),
     evaluationNumero VARCHAR(1000)
 );
 
@@ -83,7 +83,7 @@ CREATE TABLE evaluation
 (
     idExpert INT NOT NULL REFERENCES expert(idExpert),
     idNumero INT NOT NULL REFERENCES numero(idNumero),
-    noteExpert INT NOT NULL CHECK(noteExpert BETWEEN 0 and 10),
+    noteExpert FLOAT NOT NULL CHECK(noteExpert BETWEEN 0 and 10),
     evaluationExpert VARCHAR(1000),
     PRIMARY KEY (idArtiste, idNumero)
 );
