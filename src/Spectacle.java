@@ -1,8 +1,10 @@
 import java.sql.*;
 
 /* TODO
- * vérifier que les numeros/spectacles n'existent pas deja
+ * vérifier que les numeros/spectacles n'existent pas deja : FAIT, ajouter la doc
  * verifier que les presentateurs ne jouent pas : FAIT
+ * verifier que pas + de 180 min par spect : FAIT, ajouter la doc
+ * suppression dans le planning : FAIT, ajouter la doc
  */
 
 public class Spectacle extends Table{
@@ -30,12 +32,20 @@ public class Spectacle extends Table{
         stmt.close();
         res.close();
 
+        //On verifie que le numero n'est pas deja attribué
+        if (checkIfNumeroExists(num)) {
+            throw new IllegalArgumentException("Le numero " + num + "est déjà attribué.");
+        }
+
         //On verifie que le theme du numero est valide
-        stmt = connection.prepareStatement("SELECT themeNumero FROM numero WHERE idNumero = ? ");
+        //On recumère en meme temps la duree du numero, qui sera utile plus tard
+        stmt = connection.prepareStatement("SELECT themeNumero, dureeNumero FROM numero WHERE idNumero = ? ");
         stmt.setInt(1, num);
         res = stmt.executeQuery();
         res.next();
         String themeNum = res.getString("themeNumero");
+        int dureeNumero = res.getInt("dureeNumero");
+
         if (!theme.equals(themeNum)) {
             throw new IllegalArgumentException("au moins un numero a un theme different de "
                     + "celui du spectacle. Theme du spectacle : " + theme + " ; theme du "
@@ -53,6 +63,23 @@ public class Spectacle extends Table{
             if (artiste == presentateur) {
                 throw new IllegalArgumentException("Le presentateur joue dans le numero " + num);
             }
+        }
+        stmt.close();
+        res.close();
+
+        //On verifie que l'ajout de ce numero ne depasse pas la limite de 180 min par spectacle
+        //On commence par regarder la duree actuelle du spectacle
+        stmt = connection.prepareStatement("SELECT SUM(dureeNumero) FROM planning_numero JOIN numero "
+                + "ON (numero.idNumero = planing_numero.idNumero) WHERE idNumero = ?");
+        stmt.setInt(1, num);
+        res = stmt.executeQuery();
+        int dureeSpectacle = res.getInt("SUM(duereeNumero)");
+
+        //On se sert ici de la duree du numero, recuperee plus tot
+        if (dureeSpectacle + dureeNumero > 180) {
+            throw new IllegalArgumentException("Ajouter le numero " + num + "depasse la duree maximale de "
+                    + "180 min par spectacle. Duree actuelle du spectacle : " + dureeSpectacle + ", duree "
+                    + "du numero a ajouter : " + dureeNumero);
         }
     }
 
@@ -102,7 +129,7 @@ public class Spectacle extends Table{
      * @throws IllegalArgumentException : si le spectacle n'existe pas
      * @throws SQLException : si une erreur SQL se produit
      */
-    private String checkIfSpectacleExists(String date, int heure) throws SQLException, IllegalArgumentException{
+    private Boolean checkIfSpectacleExists(String date, int heure) throws SQLException, IllegalArgumentException{
         PreparedStatement stmt;
         ResultSet res;
         
@@ -113,11 +140,30 @@ public class Spectacle extends Table{
         stmt.setInt(2, heure);
 
         res = stmt.executeQuery();
-        if (!res.isBeforeFirst()) {
-            throw new IllegalArgumentException("Spectacle invalide. Heure donnee : " + heure + "date "
-                    + "donnee : " + date);
-        }
+        Boolean exists = res.next();
 
+        res.close();
+        stmt.close();
+        return exists;
+    }
+
+
+    /**
+     * Verifie si le spectacle existe. Si oui, renvoie son theme.
+     * @param date : date du spectacle
+     * @param heure : heure du spectacle
+     * @throws IllegalArgumentException : si le spectacle n'existe pas
+     * @throws SQLException : si une erreur SQL se produit
+     */
+    private String getSpectacleTheme(String date, int heure) throws SQLException{
+        PreparedStatement stmt;
+        ResultSet res;
+        
+        stmt = connection.prepareStatement("SELECT themeSpectacle FROM spectacle WHERE dateSpectacle = "
+                + "TO_DATE(?, 'YYYY-MM-DD') AND heureSpectacle = ?");
+        stmt.setString(1, date);
+        stmt.setInt(2, heure);
+        res = stmt.executeQuery();
 
         //On recupere le theme du spectacle
         res.next();
@@ -155,6 +201,9 @@ public class Spectacle extends Table{
 
         res.next();
         int presentateur = res.getInt("presentateurSpectacle");
+        
+        res.close();
+        stmt.close();
 
         return presentateur;
     }
@@ -188,7 +237,8 @@ public class Spectacle extends Table{
             insertOneNumeroIntoPlanning(date, heure, num);
         }
     }
-    
+ 
+
     /**
      * Insert un nouveau Spectacle (sans verifications)
      * @param date : date du spectacle (format AAAA-MM-JJ)
@@ -210,6 +260,97 @@ public class Spectacle extends Table{
         stmt.executeUpdate();
         stmt.close();
     }
+
+
+    private Boolean checkIfNumeroExists(int num) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("SELECT * FROM planning_numero WHERE idNumero = ?");
+        stmt.setInt(1, num);
+        ResultSet res = stmt.executeQuery();
+        
+        Boolean exists = res.next();
+
+        res.close();
+        stmt.close();
+
+        return exists;
+    }
+
+
+    private Object[] getSpectacleOf(int num) throws SQLException {
+        Object[] spectacle = new Object[2];
+        
+        PreparedStatement stmt = connection.prepareStatement("SELECT TO_CHAR(dateSpectacle, YYYY-MM-DD), heureSpectacle "
+                 + "FROM planning_numero WHERE idNumero = ?");
+        stmt.setInt(1, num);
+        ResultSet res = stmt.executeQuery();
+        res.next();
+        spectacle[0] = res.getString("dateSpectacle");
+        spectacle[1] = res.getInt("heureSpectacle");
+
+        res.close();
+        stmt.close();
+
+        return spectacle;
+    }
+
+    
+    private int getNumberOfNumerosInSpectacle(String date, int heure) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("SELECT COUNT(idNumero) FROM planning_numero "
+                + "WHERE dateSpectacle = TO_DATE(?, YYYY-MM-DD) AND heureSpectacle = ?");
+        stmt.setString(1, date);
+        stmt.setInt(2, heure);
+        ResultSet res = stmt.executeQuery();
+        res.next();
+
+        int nb = res.getInt("COUNT(idNumero)");
+        
+        res.close();
+        stmt.close();
+        return nb;
+    }
+
+
+    private void deleteOneNumeroFromPlanning(int num) throws SQLException, IllegalArgumentException {
+        //On verifie que le numero existe
+        if (!checkIfNumeroExists(num)) {
+            throw new IllegalArgumentException("Vous essayez de supprimer un numero qui n'existe pas sur "
+                    + "le planning. Id du numero : " + num);
+        }
+
+        //On verifie que ce n'est pas le seul numero du spectacle (un spectacle DOIT avoir au moins 1 numero)
+        //Il faut d'abbord récupérer le spectacle du numero
+        Object[] spectacle = getSpectacleOf(num);
+        String date = (String) spectacle[0];
+        int heure = (int) spectacle[1];
+
+        //On peut maintenant verifier que ce n'est pas le seul numero de ce spectacle
+        int nbNumero = getNumberOfNumerosInSpectacle(date, heure);
+        if (nbNumero < 2) {
+            throw new IllegalArgumentException("Vous essayez de supprimer le seul numero d'un spectacle, or "
+                    + "un spectacle doit avoir au moins 1 numero. id du numero : " + num);
+        }
+
+        //On commence la suppression
+        PreparedStatement stmt = connection.prepareStatement("DELETE FROM planning_numero WHERE idNumero = ?");
+        stmt.setInt(1, num);
+        stmt.executeUpdate();
+        stmt.close();
+    }
+
+
+    public void deleteNumerosFromPlanning(int[] listeNumeros) throws IllegalArgumentException {
+        try {
+            for (int num : listeNumeros) {
+                deleteOneNumeroFromPlanning(num);
+            }
+            //la transaction est terminee
+            connection.commit();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 	/**
 	 * Insert un nouveau spectacle.
@@ -238,6 +379,10 @@ public class Spectacle extends Table{
 		}
 
 		try {
+            if (checkIfSpectacleExists(date, heure)) {
+                throw new IllegalArgumentException("Un spectacle existe déjà le " + date + " à " + heure + "h.");
+            }
+
             checkPresentateur(presentateur);
             checkMultipleNumeros(listeNumeros, theme, presentateur);
             
@@ -245,6 +390,10 @@ public class Spectacle extends Table{
             // Creation de la requete
             insertNewSpectacle(date, heure, theme, presentateur, prix);
             insertMultipleNumerosIntoPlanning(date, heure, listeNumeros);
+            
+
+            //la transaction est terminee
+            connection.commit();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -271,7 +420,11 @@ public class Spectacle extends Table{
 
         try {
             //On verifie que le spectacle existe, et si oui on recupere son theme
-            String theme = checkIfSpectacleExists(dateSpectacle, heureSpectacle);
+            if (!checkIfSpectacleExists(dateSpectacle, heureSpectacle)) {
+                throw new IllegalArgumentException("Vous essayez d'ajouter des numeros a un spectacle qui "
+                        +"n'existe pas. Date et heure du spectacle : " + dateSpectacle + "; " + heureSpectacle);
+            }
+            String theme = getSpectacleTheme(dateSpectacle, heureSpectacle);
 
             //On verifie que les numeros qu'on ajoute ont le bon theme et qu'ils sont valides
             //Pour cela on recupere le presentateur du spectacle
@@ -280,6 +433,9 @@ public class Spectacle extends Table{
 
             //Les contraintes sont verifiees, on cree la requete d'insertion
             insertMultipleNumerosIntoPlanning(dateSpectacle, heureSpectacle, listeNumeros);
+
+            //la transaction est finie.
+            connection.commit();
         
 		} catch (SQLException e) {
 			e.printStackTrace();
