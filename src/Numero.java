@@ -115,7 +115,7 @@ public class Numero extends Table {
 			}
 
 			// Prepare the request
-			String sql = "UPDATE Numero SET (noteNumero = ?, evaluationNumero = ?) WHERE idNumero = ?");
+			String sql = "UPDATE Numero SET (noteNumero = ?, evaluationNumero = ?) WHERE idNumero = ?)";
 			PreparedStatement prstmt = connection.prepareStatement(sql);
 
 			prstmt.setFloat(1, note);

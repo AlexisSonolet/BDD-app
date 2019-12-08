@@ -34,11 +34,10 @@ public class javaApp {
         menu_str += "1. Afficher une table\n";
         menu_str += "2. Ajouter une entrée\n";
         menu_str += "3. Supprimer une entrée\n";
-        menu_str += "4. Modifier une entrée\n";
-        menu_str += "5. Quitter\n";
+        menu_str += "4. Quitter\n";
 
         int choix = 0;
-        while (choix != 5) {
+        while (choix != 4) {
             System.out.println(menu_str);
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
@@ -53,10 +52,7 @@ public class javaApp {
                 case 3: // Supprimer entree
                     javaApp.supprimer_table(db, sc);
                     break;
-                case 4: // Modifier une entree
-                    javaApp.modifier_table(db, sc);
-                    break;
-                case 5: // Quitter
+                case 4: // Quitter
                     break;
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
@@ -118,10 +114,11 @@ public class javaApp {
     private static void ajouter_table(Database db, Scanner sc) {
         String menu_str = "******* Ajouter une transaction dans une table *******\n";
         menu_str += javaApp.list_tables;
-        menu_str += "8. Retour arrière\n";
+        menu_str += "8. Planning des numeros\n";
+        menu_str += "9. Retour arrière\n";
 
         int choix = 0;
-        while (choix != 8) {
+        while (choix != 9) {
             System.out.println(menu_str);
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
@@ -147,7 +144,10 @@ public class javaApp {
                 case 7: // Expert
                     db.prepareExpert();
                     break;
-                case 8: // Retour
+                case 8: // Planning
+                    db.prepareInsertNumerosDansSpectacle();
+                    break;
+                case 9: // Retour
                     break;
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
@@ -209,42 +209,6 @@ public class javaApp {
             }
         } catch (SQLException e) {
             e.printStackTrace(System.err);
-        }
-    }
-
-    private static void modifier_table(Database db, Scanner sc) {
-        String menu_str = "******* Modifie le contenu d'une table *******\n";
-
-        int choix = 0;
-        PreparedStatement stmt = null;
-        
-        while (choix != 8) {
-            System.out.println(menu_str);
-            System.out.print("Votre choix : \n 1. Ajouter des numeros a un spectacle \n8.Retour arrière\n");
-            choix = Integer.parseInt(sc.nextLine());
-
-            switch (choix) {
-                case 1: // Ajout de numeros d'un spectacle
-                    db.prepareInsertNumerosDansSpectacle();
-                    break;
-                case 2: // Numero
-                    break;
-                case 3: // Spectacle
-                    break;
-                case 4: // Evaluation
-                    break;
-                case 5: // Specialite
-                    break;
-                case 6: // Pseudo
-                    break;
-                case 7: // Expert
-                    break;
-                case 8: // Retour
-                    break;
-                default:
-                    System.out.println("Mauvaise entrée ...\n\n");
-            }
-
         }
     }
 }
