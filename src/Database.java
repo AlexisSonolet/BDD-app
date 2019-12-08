@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.rmi.activation.UnknownObjectException;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class Database{
@@ -125,6 +127,54 @@ public class Database{
         values = this.getValues(columns);
 
         this.expert.supprimerExpert(Integer.parseInt(values[0]));
+    }
+
+// AJOUT, SUPPRESSION DES 5 EVALUATIONS DANS LA TABLE EVALUATIONS
+
+    public void prepareEvaluation() {
+
+        this.evaluation.cancel();
+
+        while (true){
+            System.out.println("Numéro à évaluer :");
+
+            int idNum = Integer.parseInt(this.sc.nextLine());
+
+            try{
+                this.evaluation.begin(idNum);
+                break;
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
+        
+        int n=0;
+        String[] num = {"premier","deuxième","troisième","quatrième","cinquième"};
+        String[] columns = new String[] {"idExpert","noteExpert","evaluationExpert"};
+        String[] values;
+        while (n<5){
+
+            System.out.println("***** Entrée de l'évaluation du "+num[n]+" expert *****");
+            values = this.getValues(columns);
+            try {
+                this.evaluation.evaluate(Integer.parseInt(values[0]), Float.parseFloat(values[1]), values[2]);
+                n++;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        this.evaluation.commit();
+    }
+
+    public void prepareSupprimeEvaluation() {
+        try {
+            System.out.println("Entrez le numéro dont l'évaluation doit être effacée (pressez Entrée pour annuler) :");
+            this.evaluation.removeEval(Integer.parseInt(this.sc.nextLine()));
+        } catch (NumberFormatException e){
+            return;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Numéro non évalué");
+        }
     }
     
 // AJOUT, SUPPRESSION DANS LA TABLE SPECIALITE, toutes testees
@@ -294,5 +344,72 @@ public class Database{
         }
 
         return values;
+    }
+
+    /**
+     * Tries to find an artist by asking the user.
+     * @return  The artist's ID
+     * @throws UnknownObjectException   If no artist is found
+     */
+
+    public int getArtist() throws UnknownObjectException {
+        System.out.println("Entrez le nom de l'artiste :");
+        ArrayList<Integer> results1 = this.artiste.recherche_nom(this.sc.nextLine());
+        if (results1.size()==0){
+            System.out.println("Artiste inconnu...");
+            throw new UnknownObjectException("Unknown artist");
+        }
+        if (results1.size()==1){
+            return results1.get(0);
+        }
+        System.out.println("Entrez le prénom de l'artiste :");
+        ArrayList<Integer> results2 = this.artiste.recherche_prenom(this.sc.nextLine());
+        if (results2.size()==0){
+            System.out.println("Artiste inconnu...");
+            throw new UnknownObjectException("Unknown artist");
+        }
+        if (results2.size()==1 || results1.contains(results2.get(0))){
+            return results1.get(0);
+        }
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for (Integer artiste : results1){
+            if (results2.contains(artiste)){
+                result.add(artiste);
+            }
+        }
+        if (result.size()==1){
+            return result.get(0);
+        }
+        if (result.size()==0){
+            System.out.println("Artiste inconnu...");
+            throw new UnknownObjectException("Unknown artist");
+        }
+        try{
+            System.out.println("Plusieurs artistes correspondent. Quel est son identifiant ?");
+            String s = "";
+            for (Integer artiste : result){
+                s+="?, ";
+            }
+            PreparedStatement pstm = this.evaluation.connection.prepareStatement("SELECT * FROM Artiste WHERE idArtiste IN ("+s.substring(0,s.length()-2)+")");
+            int i = 0;
+            for (Integer artiste : result){
+                pstm.setInt(i++,artiste);
+            }
+            printTable(pstm.executeQuery());
+        } catch (SQLException e){
+            System.err.println("Erreur lors de l'affichage des artistes");
+            e.printStackTrace(System.err);
+            throw new UnknownObjectException("Unknown artist");
+        }
+        try{
+            int a = Integer.parseInt(this.sc.nextLine());
+            if (!result.contains(a)){
+                throw new UnknownObjectException("Unknown artist");
+            }
+            return a;
+        } catch (NumberFormatException e){
+            System.out.println("Not a number");
+            throw new UnknownObjectException("Unknown artist");
+        }
     }
 }

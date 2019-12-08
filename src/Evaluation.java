@@ -180,4 +180,27 @@ public class Evaluation extends Table{
         }
     }
 
+    public void removeEval(int idNum){
+        try{
+            // Check that we have evaluated this show
+            PreparedStatement c1stm = connection.prepareStatement("SELECT * from Evaluation WHERE idNumero=?");
+            c1stm.setString(1,""+idNum);
+            ResultSet res1 = c1stm.executeQuery();
+            if (!res1.next()){
+                throw new IllegalArgumentException("Unknown show");
+            }
+            c1stm.close();
+            res1.close();
+
+            // Delete the evaluation
+
+            PreparedStatement c2stm = connection.prepareStatement("DELETE * from Evaluation WHERE idNumero=?");
+            c2stm.setString(1,""+idNum);
+            c2stm.executeQuery();
+        } catch (SQLException e) {
+            System.err.println("failed");
+			e.printStackTrace(System.err);
+        }
+    }
+
 }

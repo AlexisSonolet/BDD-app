@@ -84,6 +84,7 @@ public class javaApp {
                 case 3: // Spectacle
                     break;
                 case 4: // Evaluation
+                    db.prepareSupprimeEvaluation();
                     break;
                 case 5: // Specialite
                     db.prepareSupprimeSpecialite();
@@ -134,6 +135,7 @@ public class javaApp {
                     db.prepareSpectacle();
                     break;
                 case 4: // Evaluation
+                    db.prepareEvaluation();
                     break;
                 case 5: // Specialite
                     db.prepareSpecialite();
