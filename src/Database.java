@@ -138,66 +138,6 @@ public class Database{
 
     	this.numero.suppressionNumero(Integer.parseInt(values[0]));
     }
-
-    public void prepareInfoNumero(){
-        try{
-            String[] columns = new String[] {"idNumero"};
-            String[] values;
-            System.out.println("***** Résumé des informations d'un numéro *****");
-            values = this.getValues(columns);
-            
-            PreparedStatement stm1 = numero.connection.prepareStatement("SELECT * FROM Numero WHERE idNumero = ?");
-            stm1.setInt(1, Integer.parseInt(values[0]));
-            ResultSet res1 = stm1.executeQuery();
-            stm1.close();
-
-            if (!res1.next()){
-                System.out.println("Numéro Inconnu");
-                res1.close();
-                return;
-            }
-            System.out.println("***** Numéro *****");
-            printTable(res1);
-            res1.close();
-
-            PreparedStatement stm2 = numero.connection.prepareStatement("SELECT idExpert, noteNumero, evaluationNumero FROM Evaluation WHERE idNumero = ?");
-            stm2.setInt(1, Integer.parseInt(values[0]));
-            ResultSet res2 = stm2.executeQuery();
-            stm2.close();
-
-            if (res2.next()){
-                System.out.println("***** Evaluations *****");
-                printTable(res2);
-            }
-            res2.close();
-            
-            PreparedStatement stm3 = numero.connection.prepareStatement("SELECT dateSpectacle, heureSpectacle FROM planning_numero WHERE idNumero = ?");
-            stm3.setInt(1, Integer.parseInt(values[0]));
-            ResultSet res3 = stm3.executeQuery();
-            stm3.close();
-
-            if (res3.next()){
-                System.out.println("***** Spectacles concernés *****");
-                printTable(res3);
-            }
-            res3.close();
-
-            PreparedStatement stm4 = numero.connection.prepareStatement("SELECT idArtiste,nomArtiste,prenomArtiste FROM planning_artiste,Artiste WHERE planning_artiste.idNumero = ? AND planning_artiste.idArtiste=Artiste.idArtiste");
-            stm4.setInt(1, Integer.parseInt(values[0]));
-            ResultSet res4 = stm4.executeQuery();
-            stm4.close();
-
-            if (res4.next()){
-                System.out.println("***** Artistes participant *****");
-                printTable(res4);
-            }
-            res4.close();
-
-        } catch (SQLException e) {
-            System.err.println("failed");
-	        e.printStackTrace(System.err);
-        }
-    }
     
 // AJOUT, SUPPRESSION DANS LA TABLE EXPERT testee
     

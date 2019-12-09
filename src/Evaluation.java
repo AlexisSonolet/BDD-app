@@ -190,6 +190,8 @@ public class Evaluation extends Table{
                 stm.executeQuery();
                 stm.close();
             }
+            float m = (notes[0]+notes[1]+notes[2]+notes[3]+notes[4])/5;
+            database.numero.evaluationNumero(idNumero, "", m);
             cancel();
             connection.commit();
         } catch (SQLException e) {

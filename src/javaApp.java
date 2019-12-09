@@ -167,7 +167,7 @@ public class javaApp {
         menu_str += "8. Planning des spectacles\n";
         menu_str += "9. Planning des numeros\n";
         menu_str += "10. Numéros (groupés par thème et par notes)\n";
-        menu_str += "11. Résumé d'un Numéro\n";
+        menu_str += "11. Experts et spécialités\n";
         menu_str += "12. Retour arrière\n";
 
         int choix = 0;
@@ -209,9 +209,8 @@ public class javaApp {
                     case 10: // Numero GROUP BY themeNumero
                         stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero, noteNumero DESC");
                         break;
-                    case 11: // Infos d'un numéro
-                        db.prepareInfoNumero();
-                        break;
+                    case 11: // Experts et spécialités
+                        stmt = conn.prepareStatement("SELECT * FROM specialite_artiste WHERE idArtiste IN expert.idExpert ORDER BY specialiteArtiste")
                     case 12: // Retour
                         break;
                     default:
