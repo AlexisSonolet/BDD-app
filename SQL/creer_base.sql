@@ -1,6 +1,8 @@
 --CREATE DATABASE IF NOT EXISTS festival;
 --USE festival;
 
+COMMIT;
+
 DROP TABLE planning_artiste;
 DROP TABLE planning_numero;
 DROP TABLE specialite_artiste;
@@ -29,7 +31,9 @@ CREATE TABLE numero
     resumeNumero VARCHAR(1000),
     artistePrincipalNumero REFERENCES artiste(idArtiste),
     dureeNumero INT CHECK(dureeNumero >= 0),
-    nbartistesNumero INT CHECK(nbartistesNumero >= 1)
+    nbartistesNumero INT CHECK(nbartistesNumero >= 1),
+    noteNumero FLOAT CHECK (noteNumero BETWEEN 0 AND 10),
+    evaluationNumero VARCHAR(1000)
 );
 
 CREATE TABLE spectacle
@@ -86,3 +90,5 @@ CREATE TABLE evaluation
     evaluationExpert VARCHAR(1000),
     PRIMARY KEY (idExpert, idNumero)
 );
+
+COMMIT;
