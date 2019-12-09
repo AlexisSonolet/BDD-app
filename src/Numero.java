@@ -63,6 +63,12 @@ public class Numero extends Table {
 	        e.printStackTrace(System.err);
 		}
 	}
+
+    @Overload
+	public void insert(String Theme, String Nom, String Resume, int Duree,
+			int NbArtistes, int idArtistePrincipal) {
+        this.insert(theme, nom, Resume, Duree, NbArtistes, idArtistePrincipal, this.getMaxId() + 1);
+    }
 	
 	public void suppressionNumero(int idNumero) {
 		try {
@@ -131,4 +137,21 @@ public class Numero extends Table {
 			e.printStackTrace();
 		}
 	}
+
+    private void getMaxId() {
+        int maxId = 0;
+        try {
+            PreparedStatement stm = connection.prepareStatement("SELECT idExpert FROM expert");
+            ResultSet res = stm.executeQuery();
+
+            while (res.next()) {
+                if (res.getInt(1) > maxId)
+                    maxId = res.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+        } finally {
+            return maxId;
+        }
+    }
 }
