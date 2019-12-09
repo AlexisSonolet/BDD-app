@@ -48,8 +48,12 @@ public class Database{
     	String[] values;
     	System.out.println("***** Suppression d'une entrée dans la table artiste *****");
     	values = this.getValues(columns);
-
-    	this.artiste.suppressionArtiste(Integer.parseInt(values[0]));
+        try {
+    	    this.artiste.suppressionArtiste(Integer.parseInt(values[0]));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
 
 // AJOUT, SUPPRESSION DANS LA TABLE PSEUDO_ARTISTE, toutes testées
@@ -64,7 +68,12 @@ public class Database{
         for (int i = 0; i < nombre_pseudos; i ++) {
         	System.out.println("Pseudo n°" + (i+1) +" que vous souhaitez ajouter");
         	String pseudo = this.sc.nextLine();
-        	this.pseudo_artiste.ajoutPseudoArtiste(idArtiste, pseudo);
+        	try {
+                this.pseudo_artiste.ajoutPseudoArtiste(idArtiste, pseudo);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erreur, abandon de la transaction");
+                System.out.println(e.getMessage());
+            }
         }
     }
     
@@ -73,8 +82,12 @@ public class Database{
     	String[] values;
     	System.out.println("***** Suppression d'une entrée dans la table pseudo_artiste *****");
     	values = this.getValues(columns);
-    	
-    	this.pseudo_artiste.suppressionPseudo(Integer.parseInt(values[0]), values[1]);
+    	try {
+    	    this.pseudo_artiste.suppressionPseudo(Integer.parseInt(values[0]), values[1]);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
     
     public void prepareSuppAllPseudo() {
@@ -82,8 +95,12 @@ public class Database{
     	String[] values;
     	System.out.println("***** Suppression d'un artiste dans la table pseudo_artiste *****");
     	values = this.getValues(columns);
-    	
-    	this.pseudo_artiste.suppAllPseudo(Integer.parseInt(values[0]));
+    	try {
+    	    this.pseudo_artiste.suppAllPseudo(Integer.parseInt(values[0]));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
     
 // AJOUT, SUPPRESSION DANS LA TABLE NUMERO, aucune testée
@@ -103,8 +120,12 @@ public class Database{
     	String[] values;
     	System.out.println("***** Suppression d'une entrée dans la table numéro *****");
     	values = this.getValues(columns);
-
-    	this.numero.suppressionNumero(Integer.parseInt(values[0]));
+        try {
+    	    this.numero.suppressionNumero(Integer.parseInt(values[0]));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
     
 // AJOUT, SUPPRESSION DANS LA TABLE EXPERT testee
@@ -115,8 +136,12 @@ public class Database{
 
         System.out.println("***** Ajout d'une entrée dans la table expert *****");
         values = this.getValues(columns);
-
-        this.expert.register(Integer.parseInt(values[0]));
+        try{
+            this.expert.register(Integer.parseInt(values[0]));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void prepareSupprimeExpert() {
@@ -125,8 +150,12 @@ public class Database{
 
         System.out.println("***** Suppression d'une entrée dans la table expert *****");
         values = this.getValues(columns);
-
-        this.expert.supprimerExpert(Integer.parseInt(values[0]));
+        try {
+            this.expert.supprimerExpert(Integer.parseInt(values[0]));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
 
 // AJOUT, SUPPRESSION DES 5 EVALUATIONS DANS LA TABLE EVALUATIONS
@@ -190,7 +219,12 @@ public class Database{
         for (int i = 0; i < nombre_specialites; i ++) {
         	System.out.println("Spécialité n°" + (i+1) +" que vous souhaitez ajouter");
         	String specialite = this.sc.nextLine();
-        	this.specialite_artiste.ajoutSpecialite(idArtiste, specialite);
+        	try {
+                this.specialite_artiste.ajoutSpecialite(idArtiste, specialite);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erreur, abandon de la transaction");
+                System.out.println(e.getMessage());
+            }
         }
     }
     
@@ -199,8 +233,12 @@ public class Database{
     	String[] values;
     	System.out.println("***** Suppression d'une entrée dans la table specialite_artiste *****");
     	values = this.getValues(columns);
-    	
-    	this.specialite_artiste.suppressionSpecialite(Integer.parseInt(values[0]), values[1]);
+    	try {
+    	    this.specialite_artiste.suppressionSpecialite(Integer.parseInt(values[0]), values[1]);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
     
     public void prepareSuppAllSpecialite() {
@@ -208,8 +246,12 @@ public class Database{
     	String[] values;
     	System.out.println("***** Suppression d'un artiste dans la table specialite_artiste *****");
     	values = this.getValues(columns);
-    	
-    	this.specialite_artiste.suppAllSpecialite(Integer.parseInt(values[0]));
+    	try {
+    	    this.specialite_artiste.suppAllSpecialite(Integer.parseInt(values[0]));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
  
 //SPECTACLES toutes VALIDEES
@@ -242,8 +284,12 @@ public class Database{
             System.out.println("Id d'un numero a ajouter : ");
             listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
         }
-            
-        spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
+        try {           
+            spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
         
     }
     
@@ -266,8 +312,12 @@ public class Database{
             System.out.println("Id d'un numero a ajouter : ");
             listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
         }
-
-        this.spectacle.insertNewNumerosToSpectacle(date, heure, listeNumeros);
+        try {
+            this.spectacle.insertNewNumerosToSpectacle(date, heure, listeNumeros);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void prepareSuppressionNumerosDansSpectacle() {
@@ -283,8 +333,12 @@ public class Database{
             System.out.println("Id d'un numero a supprimer : ");
             listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
         }
-
-        this.spectacle.deleteNumerosFromPlanning(listeNumeros);
+        try {
+            this.spectacle.deleteNumerosFromPlanning(listeNumeros);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
 
 
