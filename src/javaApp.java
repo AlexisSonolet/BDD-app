@@ -161,16 +161,17 @@ public class javaApp {
         String menu_str = "******* Afficher le contenu d'une table *******\n";
         menu_str += javaApp.list_tables;
         menu_str += "8. Planning des spectacles\n";
-        menu_str += "9. Retour arrière\n";
+        menu_str += "9. Numéros (groupés par thème)\n";
+        menu_str += "10. Retour arrière\n";
 
         int choix = 0;
         PreparedStatement stmt = null;
         try {
-            while (choix != 9) {
+            while (choix != 10) {
                 System.out.println(menu_str);
                 System.out.print("Votre choix : ");
                 choix = Integer.parseInt(sc.nextLine());
-                
+
                 switch (choix) {
                     case 1: // Artiste
                         stmt = conn.prepareStatement("SELECT * FROM artiste ORDER BY idArtiste");
@@ -196,13 +197,15 @@ public class javaApp {
                     case 8: // Spectacle
                         stmt = conn.prepareStatement("SELECT * FROM planning_numero ORDER BY dateSpectacle, heureSpectacle");
                         break;
-                    case 9: // Retour
+                    case 9: // Numero GROUP BY themeNumero
+                        stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero");
+                    case 10: // Retour
                         break;
                     default:
                         System.out.println("Mauvaise entrée ...\n\n");
                 }
 
-                if (choix >= 1 && choix <= 8) { // On a une query à executer et à afficher
+                if (choix >= 1 && choix <= 9) { // On a une query à executer et à afficher
                     ResultSet res = stmt.executeQuery();
                     db.printTable(res);
                     res.close();
