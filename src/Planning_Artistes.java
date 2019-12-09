@@ -43,6 +43,7 @@ public class Planning_Artistes extends Table {
 			prstmt.setInt(2, idNumero);
 		    prstmt.executeQuery();
             prstmt.close();
+            connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 	    }

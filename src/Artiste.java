@@ -21,6 +21,7 @@ public class Artiste extends Table {
         istm.setString(6, telephoneArtiste);
         istm.executeQuery();
         istm.close();
+        connection.commit();
 	} catch (SQLException e) {
         System.err.println("failed");
         e.printStackTrace(System.err);
@@ -39,6 +40,7 @@ public class Artiste extends Table {
 	        istm.setInt(1, idArtiste);
 	        istm.executeQuery();
 	        istm.close();
+            connection.commit();
 		} catch (SQLException e) {
 	        System.err.println("failed");
 	        e.printStackTrace(System.err);
