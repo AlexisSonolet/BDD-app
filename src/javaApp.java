@@ -115,12 +115,13 @@ public class javaApp {
     private static void ajouter_table(Database db, Scanner sc) {
         String menu_str = "******* Ajouter une transaction dans une table *******\n";
         menu_str += javaApp.list_tables;
-        menu_str += "8. Planning des numeros\n";
+        menu_str += "8. Planning d'un spectacle\n";
         menu_str += "9. Evaluation globale d'un numéro\n";
-        menu_str += "10. Retour arrière\n";
+        menu_str += "10. Planning d'un numero\n";
+        menu_str += "11. Retour arrière\n";
 
         int choix = 0;
-        while (choix != 10) {
+        while (choix != 11) {
             System.out.println(menu_str);
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
@@ -153,7 +154,10 @@ public class javaApp {
                 case 9: // Evaluation globale
                     db.prepareEvaluationGlobale();
                     break;
-                case 10: // Retour
+                case 10: // Evaluation globale
+                    db.prepareInsertArtisteDansPlanning();
+                    break;
+                case 11: // Retour
                     break;
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
