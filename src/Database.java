@@ -242,8 +242,12 @@ public class Database{
             System.out.println("Id d'un numero a ajouter : ");
             listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
         }
-            
-        spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
+        try {           
+            spectacle.insert(date, heure, theme, presentateur, prix, listeNumeros);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
         
     }
     
@@ -266,8 +270,12 @@ public class Database{
             System.out.println("Id d'un numero a ajouter : ");
             listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
         }
-
-        this.spectacle.insertNewNumerosToSpectacle(date, heure, listeNumeros);
+        try {
+            this.spectacle.insertNewNumerosToSpectacle(date, heure, listeNumeros);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
 
     public void prepareSuppressionNumerosDansSpectacle() {
@@ -283,8 +291,12 @@ public class Database{
             System.out.println("Id d'un numero a supprimer : ");
             listeNumeros[i] = Integer.parseInt(this.sc.nextLine());
         }
-
-        this.spectacle.deleteNumerosFromPlanning(listeNumeros);
+        try {
+            this.spectacle.deleteNumerosFromPlanning(listeNumeros);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur, abandon de la transaction");
+            System.out.println(e.getMessage());
+        }
     }
 
 

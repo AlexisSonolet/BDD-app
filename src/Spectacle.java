@@ -351,6 +351,12 @@ public class Spectacle extends Table{
 
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
         }
     }
 
@@ -400,6 +406,12 @@ public class Spectacle extends Table{
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 	}
     
@@ -442,6 +454,12 @@ public class Spectacle extends Table{
         
 		} catch (SQLException e) {
 			e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 
 	}

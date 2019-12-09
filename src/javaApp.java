@@ -191,7 +191,7 @@ public class javaApp {
                         stmt = conn.prepareStatement("SELECT * FROM pseudo_artiste ORDER BY idArtiste");
                         break;
                     case 7: // Expert
-                        stmt = conn.prepareStatement("SELECT * FROM expert ORDER BY idArtiste");
+                        stmt = conn.prepareStatement("SELECT * FROM expert ORDER BY idExpert");
                         break;
                     case 8: // Spectacle
                         stmt = conn.prepareStatement("SELECT * FROM planning_numero ORDER BY dateSpectacle, heureSpectacle");
