@@ -1,5 +1,7 @@
 import java.sql.*;
 
+import com.sun.org.apache.xpath.internal.axes.SelfIteratorNoPredicate;
+
 public class Evaluation extends Table{
 
     private int idNumero;
@@ -51,8 +53,8 @@ public class Evaluation extends Table{
             res1.close();
             // Check that it has not already been evaluated.
             PreparedStatement c2stm = connection.prepareStatement("SELECT * from Evaluation WHERE idNumero=?");
-            c2stm.setString(1,""+idNum);
-            ResultSet res2 = c1stm.executeQuery();
+            c2stm.setInt(1, idNum);
+            ResultSet res2 = c2stm.executeQuery();
             if (res2.next()){
                 throw new IllegalArgumentException("Show already evaluated");
             }
@@ -65,6 +67,7 @@ public class Evaluation extends Table{
             PreparedStatement c3stm = connection.prepareStatement("SELECT ThemeNumero from Numero WHERE idNumero=?");
             c3stm.setString(1,""+idNum);
             ResultSet res3 = c3stm.executeQuery();
+            res3.next();
             theme = res3.getString(1);
             c3stm.close();
             res3.close();
@@ -97,7 +100,7 @@ public class Evaluation extends Table{
             }
             // Check that this is indeed an expert.
             PreparedStatement c1stm = connection.prepareStatement("SELECT * from Expert WHERE idExpert=?");
-            c1stm.setString(1,""+idExpert);
+            c1stm.setInt(1, idExpert);
             ResultSet res1 = c1stm.executeQuery();
             if (!res1.next()){
                 throw new IllegalArgumentException("Unknown expert");
@@ -112,8 +115,9 @@ public class Evaluation extends Table{
             }
             // Check that the expert has not evaluated too many shows.
             PreparedStatement c2stm = connection.prepareStatement("SELECT Count(*) from Evaluation WHERE idExpert=?");
-            c2stm.setString(1,""+idExpert);
-            ResultSet res2 = c1stm.executeQuery();
+            c2stm.setInt(1, idExpert);
+            ResultSet res2 = c2stm.executeQuery();
+            res2.next();
             if (res2.getInt(1)>=15){
                 throw new IllegalArgumentException("Expert has already evaluated too many shows");
             }
@@ -146,6 +150,8 @@ public class Evaluation extends Table{
             notes[registered] = note;
             evaluations[registered] = eval;
             experts[registered] = idExpert;
+            
+            this.registered += 1;
         } catch (SQLException e) {
             System.err.println("failed");
 			e.printStackTrace(System.err);
