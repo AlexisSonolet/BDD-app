@@ -13,7 +13,7 @@ public class Specialite extends Table {
 		try{
 	        PreparedStatement istm = connection.prepareStatement("INSERT into specialite_artiste VALUES (?, ?)");
 	        istm.setInt(1, idArtiste);
-	        istm.setString(2, specialite.toLowerCase());
+	        istm.setString(2, specialite);
 	        istm.executeQuery();
 	        istm.close();
             connection.commit();
@@ -27,7 +27,7 @@ public class Specialite extends Table {
         try {
 	        PreparedStatement istm = connection.prepareStatement("DELETE FROM specialite_artiste WHERE idArtiste = ? AND specialiteArtiste = ?");
 	        istm.setInt(1, idArtiste);
-            istm.setString(2, specialite.toLowerCase());
+            istm.setString(2, specialite);
 	        istm.executeQuery();
 	        istm.close();
             connection.commit();

@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.rmi.activation.UnknownObjectException;
 import java.sql.*;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Database{
@@ -34,13 +33,32 @@ public class Database{
     }
 
     public void prepareArtist() {
-        String[] columns = new String[] {"idArtiste", "nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
+        String[] columns = new String[] {"nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
         String[] values;
 
         System.out.println("***** Ajout d'une entrée dans la table artiste *****");
         values = this.getValues(columns);
 
-        this.artiste.ajoutArtiste(Integer.parseInt(values[0]), values[1], values[2], values[3], values[4], values[5]);
+        int idArtiste = this.artiste.ajoutArtiste(values[0], values[1], values[2], values[3], values[4]);
+
+        // Does the artist want to make a show?
+
+        System.out.println("Voulez-vous ajouter un numéro dont cet artiste en sera le principal ? (y/n)");
+        boolean leave = false;
+        while (!leave) {
+            String choice = sc.nextLine();
+            switch (choice) {
+                case "y":
+                    leave = true;
+                    break;
+                case "n":
+                    return;
+                default:
+                    System.out.println("Entrée invalide");
+            }
+        }
+
+        prepareNumero(idArtiste);
     }
 
     public void prepareSupprimeArtist() {
@@ -88,14 +106,25 @@ public class Database{
     
 // AJOUT, SUPPRESSION DANS LA TABLE NUMERO, aucune testée
     public void prepareNumero() {
-        String[] columns = new String[] {"idNumero", "Theme", "Nom", "Resume", "Duree", "NbArtistes", "idArtistePrincipal"};
+        String[] columns = new String[] {"Theme", "Nom", "Resume", "Duree", "NbArtistes", "idArtistePrincipal"};
         String[] values;
 
         System.out.println("***** Ajout d'une entrée dans la table numéro *****");
         values = this.getValues(columns);
 
-        this.numero.insert(values[1], values[2], values[3], Integer.parseInt(values[4]), Integer.parseInt(values[5]),
-        		Integer.parseInt(values[6]), Integer.parseInt(values[0]));
+        this.numero.insert(values[0], values[1], values[2], Integer.parseInt(values[3]), Integer.parseInt(values[4]),
+        		Integer.parseInt(values[5]));
+    }
+
+    public void prepareNumero(int idArtistePrincipal) {
+        String[] columns = new String[] {"Theme", "Nom", "Resume", "Duree", "NbArtistes"};
+        String[] values;
+
+        System.out.println("***** Ajout d'une entrée dans la table numéro *****");
+        values = this.getValues(columns);
+
+        this.numero.insert(values[0], values[1], values[2], Integer.parseInt(values[3]), Integer.parseInt(values[4]),
+        		Integer.parseInt(values[5]));
     }
 
     public void prepareSupprimeNumero() {
@@ -312,6 +341,9 @@ public class Database{
                 ArrayList<String> line = new ArrayList<String>();
                 for (int i=0;i<m;i++){
                     String col = res.getString(i+1);
+                    if (col == null)
+                        col = "";
+
                     if (col.length()>sizes[i]){
                         sizes[i]=col.length();
                     }
