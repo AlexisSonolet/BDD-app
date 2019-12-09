@@ -129,7 +129,7 @@ public class Evaluation extends Table{
             c2stm.close();
             res2.close();
             // Check that the expert's circus is not one of the show's artists
-            String sbig_stm1 = "SELECT cirqueArtiste FROM Artiste JOIN Planning_Artiste ON Artiste.idArtiste = Planning_Artiste.idArtiste AND Planning_Artiste.idNumero = ?";
+            String sbig_stm1 = "SELECT cirqueArtiste FROM Artiste JOIN Planning_Artiste ON Artiste.idArtiste = Planning_Artiste.idArtiste WHERE Planning_Artiste.idNumero = ?";
             PreparedStatement big_stm1 = connection.prepareStatement(sbig_stm1);
             big_stm1.setInt(1, idNumero);
             ResultSet bres1 = big_stm1.executeQuery();
@@ -142,7 +142,7 @@ public class Evaluation extends Table{
                 String cirExp = bres2.getString(1);
                 while (bres1.next()){
                     String cirArt = bres1.getString(1);
-                    if (cirArt==cirExp){
+                    if (cirArt.equals(cirExp)){
                         throw new IllegalArgumentException("Cet expert est du même cirque qu'un artiste du numéro");
                     }
                 }
