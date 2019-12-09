@@ -84,4 +84,11 @@ INSERT INTO pseudo_artiste VALUES (9, 'Essence');
 INSERT INTO pseudo_artiste VALUES (9, 'Chemise');
 INSERT INTO pseudo_artiste VALUES (2, 'Langlaise');
 
+-- Table des spectacles
+INSERT INTO spectacle VALUES (TO_DATE('1111-11-11', 'YYYY-MM-DD'), 9, 'Zoo', 1, 7);
+
+-- Planning numero
+INSERT INTO planing_numero VALUES(TO_DATE('1111-11-11', 'YYYY-MM-DD'), 9, 4);
+
+
 COMMIT; -- On sauvegarde
