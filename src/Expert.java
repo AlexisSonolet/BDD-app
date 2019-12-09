@@ -14,7 +14,7 @@ public class Expert extends Table {
 	        PreparedStatement istm = connection.prepareStatement("DELETE FROM expert WHERE idExpert = ?");
 	        istm.setInt(1, idArtiste);
 	        istm.executeQuery();
-	        istm.close();
+            istm.close();
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace(System.err);

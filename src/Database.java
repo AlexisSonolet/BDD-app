@@ -412,4 +412,13 @@ public class Database{
             throw new UnknownObjectException("Unknown artist");
         }
     }
+
+	public void prepareEvaluationGlobale() {
+        String[] values;
+        String[] columns = {"idNumero","Note","Evaluation"};
+
+        values = getValues(columns);
+
+        this.numero.evaluationNumero(Integer.parseInt(values[0]), values[2], Float.parseFloat(values[1]));
+	}
 }

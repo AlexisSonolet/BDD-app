@@ -38,14 +38,14 @@ public class Evaluation extends Table{
         try {
             // Check that we are not already evaluating a show.
             if (registered!=-1){
-                throw new IllegalArgumentException("Already avaluating a show");
+                throw new IllegalArgumentException("Evaluation en cours");
             }
             // Check that this show exists.
             PreparedStatement c1stm = connection.prepareStatement("SELECT * from Numero WHERE idNumero=?");
             c1stm.setString(1,""+idNum);
             ResultSet res1 = c1stm.executeQuery();
             if (!res1.next()){
-                throw new IllegalArgumentException("Unknown show");
+                throw new IllegalArgumentException("Numéro inconnu");
             }
             c1stm.close();
             res1.close();
@@ -54,7 +54,7 @@ public class Evaluation extends Table{
             c2stm.setInt(1, idNum);
             ResultSet res2 = c2stm.executeQuery();
             if (res2.next()){
-                throw new IllegalArgumentException("Show already evaluated");
+                throw new IllegalArgumentException("Numéro déjà évalué");
             }
             c2stm.close();
             res2.close();
@@ -87,29 +87,29 @@ public class Evaluation extends Table{
         try {
             // Check that we're evaluating a show.
             if (registered<0){
-                throw new IllegalArgumentException("Not evaluating a show");
+                throw new IllegalArgumentException("Aucune évaluation en cours");
             }
             // Check that we don't already have five experts.
             if (registered>=5){
-                throw new IllegalArgumentException("Evaluation complete");
+                throw new IllegalArgumentException("Evaluation complète");
             }
             // Check that the note has an acceptable value.
             if (note<0 || note>10){
-                throw new IllegalArgumentException("Note must be between 0 and 10");
+                throw new IllegalArgumentException("La note doit être entre 0 et 10");
             }
             // Check that this is indeed an expert.
             PreparedStatement c1stm = connection.prepareStatement("SELECT * from Expert WHERE idExpert=?");
             c1stm.setInt(1, idExpert);
             ResultSet res1 = c1stm.executeQuery();
             if (!res1.next()){
-                throw new IllegalArgumentException("Unknown expert");
+                throw new IllegalArgumentException("Expert inconnu");
             }
             c1stm.close();
             res1.close();
             // Check that this expert has not already evaluated this show.
             for (int i = 0;i<registered;i++){
                 if (experts[i]==idExpert){
-                    throw new IllegalArgumentException("Already typed in the evaluation of that expert");
+                    throw new IllegalArgumentException("Cet expert a déjà évalué ce numéro");
                 }
             }
             // Check that the expert has not evaluated too many shows.
@@ -118,7 +118,7 @@ public class Evaluation extends Table{
             ResultSet res2 = c2stm.executeQuery();
             res2.next();
             if (res2.getInt(1)>=15){
-                throw new IllegalArgumentException("Expert has already evaluated too many shows");
+                throw new IllegalArgumentException("Cet expert a évalué trop de numéros");
             }
             c2stm.close();
             res2.close();
@@ -132,14 +132,14 @@ public class Evaluation extends Table{
                 // It is a specialist.
                 if (specialistes+1>3){
                     // Too many specialists.
-                    throw new IllegalArgumentException("Too many specialists for the evaluation of this show");
+                    throw new IllegalArgumentException("Trop de spécialistes");
                 }
                 res++;
             } else {
                 // It is not a specialist
                 if (registered+1-specialistes > 2){
                     // Too many non-specialists.
-                    throw new IllegalArgumentException("Too many non-specialists for the evaluation of this show");
+                    throw new IllegalArgumentException("Trop de non spécialistes");
                 }
             }
             c3stm.close();
@@ -163,10 +163,10 @@ public class Evaluation extends Table{
 
     public void commit(){
         if (registered==-1){
-            throw new IllegalArgumentException("Not even evaluating");
+            throw new IllegalArgumentException("Numéro à évaluer non spécifié");
         }
         if (registered<5){
-            throw new IllegalArgumentException("Not all experts have sent their evaluation");
+            throw new IllegalArgumentException("Il manque des évaluations pour le numéro");
         }
         try {
             for (int i=0;i<5;i++){
@@ -193,7 +193,7 @@ public class Evaluation extends Table{
             c1stm.setString(1,""+idNum);
             ResultSet res1 = c1stm.executeQuery();
             if (!res1.next()){
-                throw new IllegalArgumentException("Unknown show");
+                throw new IllegalArgumentException("Numéro inconnu");
             }
             c1stm.close();
             res1.close();
@@ -210,5 +210,4 @@ public class Evaluation extends Table{
 			e.printStackTrace(System.err);
         }
     }
-
 }

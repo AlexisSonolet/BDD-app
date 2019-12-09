@@ -116,7 +116,8 @@ public class javaApp {
         String menu_str = "******* Ajouter une transaction dans une table *******\n";
         menu_str += javaApp.list_tables;
         menu_str += "8. Planning des numeros\n";
-        menu_str += "9. Retour arrière\n";
+        menu_str += "9. Evaluation globale d'un numéro\n";
+        menu_str += "10. Retour arrière\n";
 
         int choix = 0;
         while (choix != 9) {
@@ -149,7 +150,10 @@ public class javaApp {
                 case 8: // Planning
                     db.prepareInsertNumerosDansSpectacle();
                     break;
-                case 9: // Retour
+                case 9: // Evaluation globale
+                    db.prepareEvaluationGlobale();
+                    break;
+                case 10: // Retour
                     break;
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
