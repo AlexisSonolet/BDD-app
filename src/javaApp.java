@@ -166,8 +166,9 @@ public class javaApp {
         menu_str += javaApp.list_tables;
         menu_str += "8. Planning des spectacles\n";
         menu_str += "9. Planning des numeros\n";
-        menu_str += "10. Numéros (groupés par thème)\n";
-        menu_str += "11. Retour arrière\n";
+        menu_str += "10. Numéros (groupés par thème et par notes)\n";
+        menu_str += "11. Résumé d'un Numéro\n";
+        menu_str += "12. Retour arrière\n";
 
         int choix = 0;
         PreparedStatement stmt = null;
@@ -208,7 +209,10 @@ public class javaApp {
                     case 10: // Numero GROUP BY themeNumero
                         stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero, noteNumero DESC");
                         break;
-                    case 11: // Retour
+                    case 11: // Infos d'un numéro
+                        db.prepareInfoNumero();
+                        break;
+                    case 12: // Retour
                         break;
                     default:
                         System.out.println("Mauvaise entrée ...\n\n");
