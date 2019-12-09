@@ -1,8 +1,6 @@
 --CREATE DATABASE IF NOT EXISTS festival;
 --USE festival;
 
-COMMIT;
-
 DROP TABLE planning_artiste;
 DROP TABLE planning_numero;
 DROP TABLE specialite_artiste;

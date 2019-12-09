@@ -1,6 +1,6 @@
 -- Table des artistes
-INSERT INTO artiste VALUES (0, 'Dupont', 'Jacques', TO_DATE('1997-10-24', 'YYYY-MM-DD'), 'La fête a la maison', '06-18-18-18-18');
-INSERT INTO artiste VALUES (1, 'Jibougne', 'Leo', TO_DATE('1994-04-14', 'YYYY-MM-DD'), 'La fête a la maison', '06-28-18-18-18');
+INSERT INTO artiste VALUES (0, 'Dupont', 'Jacques', TO_DATE('1997-10-24', 'YYYY-MM-DD'), 'La fete a la maison', '06-18-18-18-18');
+INSERT INTO artiste VALUES (1, 'Jibougne', 'Leo', TO_DATE('1994-04-14', 'YYYY-MM-DD'), 'La fete a la maison', '06-28-18-18-18');
 INSERT INTO artiste VALUES (2, 'Latisane', 'Nicolette', TO_DATE('1947-10-24', 'YYYY-MM-DD'), 'Ici cest parti', '06-18-28-18-18');
 INSERT INTO artiste VALUES (3, 'Natoo', 'Hugues', TO_DATE('1992-10-24', 'YYYY-MM-DD'), 'Ici cest parti', '07-38-18-18-18');
 INSERT INTO artiste VALUES (4, 'Haroun', 'Lea', TO_DATE('1897-10-24', 'YYYY-MM-DD'), 'Ici cest parti', '07-18-18-18-18');
@@ -58,12 +58,12 @@ INSERT INTO specialite_artiste VALUES (23, 'Zoo');
 INSERT INTO specialite_artiste VALUES (23, 'Clown');
 
 -- Table des numeros
-INSERT INTO numero VALUES (0, 'La machine a sous', 'Magie', 'Ceci est un resume du numero', 10, 30, 1, 5, "Ceci est une evaluation");
-INSERT INTO numero VALUES (1, 'TOP 10 des elephants', 'Zoo', 'Ceci est un resume du numero', 0, 30, 3, 3, "Ceci est une evaluation");
-INSERT INTO numero VALUES (2, 'Une corde cest bien, deux cest mieux', 'Voltige', 'Ceci est un resume du numero', 2, 30, 3, 7, "Ceci est une evaluation");
-INSERT INTO numero VALUES (3, 'Jai un grand sourire', 'Clown', 'Ceci est un resume du numero', 1, 30, 1, 8, "Ceci est une evaluation");
-INSERT INTO numero VALUES (4, 'Imaginez la licorne', 'Zoo', 'Ceci est un resume du numero', 14, 10, 5, 3, "We want your soul");
-INSERT INTO numero VALUES (5, 'Quelle vie', 'Clown', 'Ceci est un resume du numero', 17, 20, 3, 7, "Ceci est une evaluation");
+INSERT INTO numero VALUES (0, 'La machine a sous', 'Magie', 'Ceci est un resume du numero', 10, 30, 1, 5, 'Ceci est une evaluation');
+INSERT INTO numero VALUES (1, 'TOP 10 des elephants', 'Zoo', 'Ceci est un resume du numero', 0, 30, 3, 3, 'Ceci est une evaluation');
+INSERT INTO numero VALUES (2, 'Une corde cest bien, deux cest mieux', 'Voltige', 'Ceci est un resume du numero', 2, 30, 3, 7, 'Ceci est une evaluation');
+INSERT INTO numero VALUES (3, 'Jai un grand sourire', 'Clown', 'Ceci est un resume du numero', 1, 30, 1, 8, 'Ceci est une evaluation');
+INSERT INTO numero VALUES (4, 'Imaginez la licorne', 'Zoo', 'Ceci est un resume du numero', 14, 10, 5, 3, 'We want your soul');
+INSERT INTO numero VALUES (5, 'Quelle vie', 'Clown', 'Ceci est un resume du numero', 17, 20, 3, 7, 'Ceci est une evaluation');
 
 -- Table des experts
 INSERT INTO expert VALUES (7);
