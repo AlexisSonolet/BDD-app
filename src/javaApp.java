@@ -120,7 +120,7 @@ public class javaApp {
         menu_str += "10. Retour arrière\n";
 
         int choix = 0;
-        while (choix != 9) {
+        while (choix != 10) {
             System.out.println(menu_str);
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
