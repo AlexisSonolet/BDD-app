@@ -118,9 +118,9 @@ public class javaApp {
     private static void ajouter_table(Database db, Scanner sc) {
         String menu_str = "******* Ajouter une transaction dans une table *******\n";
         menu_str += javaApp.list_tables;
-        menu_str += "8. Planning d'un spectacle\n";
+        menu_str += "8. Ajouter un numero au planning d'un spectacle\n";
         menu_str += "9. Evaluation globale d'un numéro\n";
-        menu_str += "10. Planning d'un numero\n";
+        menu_str += "10. Ajouter un artiste au planning d'un numero\n";
         menu_str += "11. Retour arrière\n";
 
         int choix = 0;
