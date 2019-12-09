@@ -69,16 +69,19 @@ public class javaApp {
         menu_str += "11. Retour arrière\n";
 
         int choix = 0;
-        while (choix != 11) {
-            System.out.println(menu_str);
+        while (choix != 2) {
+            System.out.println("1. Supprimer un numero du planning d'un spectacle\n2. Retour arrière");
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
 
             switch (choix) {
                 case 1: // Artiste
-                    db.prepareSupprimeArtist();
+                    db.prepareSuppressionNumerosDansSpectacle();
+                    //db.prepareSupprimeArtist();
                     break;
-                case 2: // Numero
+                case 2:
+                    break; // Numero
+                /*
                 	db.prepareSupprimeNumero();
                     break;
                 case 3: // Spectacle
@@ -105,7 +108,7 @@ public class javaApp {
                     db.prepareSuppressionNumerosDansSpectacle();
                     break;
                 case 11: //Retour
-                    break;
+                    break; */
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
             }
