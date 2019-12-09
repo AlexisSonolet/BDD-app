@@ -319,6 +319,27 @@ public class Database{
         this.spectacle.deleteNumerosFromPlanning(listeNumeros);
     }
 
+//Planning artistes
+    public void prepareInsertArtisteDansPlanning() {
+        Boolean restart = true;
+        Boolean exit = false;
+        int artiste = - 1;
+        while (restart) {
+            try {
+                artiste = getArtist();
+                restart = false;
+            } catch (UnknownObjectException e) {
+                System.out.println("erreur, voulez-vous recommencer ? (1 : oui ; 2 : quitter)");
+                exit = (Integer.parseInt(this.sc.nextLine()) == 2);
+                if (exit) { restart = false; }
+            }
+        }
+        if (!exit) {
+            System.out.println("Id du numero auquel l'artiste participe : ");
+            int numero = Integer.parseInt(this.sc.nextLine());
+            this.planning_artiste.insert(artiste, numero);
+        }
+    }
 
 // AFFICHAGE TABLES
     /**
