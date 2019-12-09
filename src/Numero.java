@@ -57,6 +57,7 @@ public class Numero extends Table {
 			prstmt.setInt(7, idArtistePrincipal);
             prstmt.executeQuery();
 			prstmt.close();
+            connection.commit();
 		} catch (SQLException e) {
 			System.err.println("failed");
 	        e.printStackTrace(System.err);
@@ -84,6 +85,7 @@ public class Numero extends Table {
 			prstmt.setInt(1, idNumero);
             prstmt.executeQuery();
 			prstmt.close();
+            connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -123,6 +125,7 @@ public class Numero extends Table {
 			prstmt.setInt(3, idNumero);
             prstmt.executeQuery();
 			prstmt.close();
+            connection.commit();
 		} catch (SQLException e) {
 			System.err.println("failed");
 			e.printStackTrace();

@@ -15,6 +15,7 @@ public class Expert extends Table {
 	        istm.setInt(1, idArtiste);
 	        istm.executeQuery();
 	        istm.close();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
@@ -58,6 +59,7 @@ public class Expert extends Table {
             istm.executeQuery();
             istm.close();
             res3.close();
+            connection.commit();
 		} catch (SQLException e){
 			System.err.println("failed");
 			e.printStackTrace(System.err);

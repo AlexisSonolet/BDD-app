@@ -16,6 +16,7 @@ public class Specialite extends Table {
 	        istm.setString(2, specialite.toLowerCase());
 	        istm.executeQuery();
 	        istm.close();
+            connection.commit();
 		} catch (SQLException e) {
 	        System.err.println("failed");
 	        e.printStackTrace(System.err);
@@ -29,6 +30,7 @@ public class Specialite extends Table {
             istm.setString(2, specialite.toLowerCase());
 	        istm.executeQuery();
 	        istm.close();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace(System.err);
         }
