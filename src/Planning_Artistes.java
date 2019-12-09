@@ -46,6 +46,12 @@ public class Planning_Artistes extends Table {
             connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 	    }
     }
 }
