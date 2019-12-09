@@ -83,3 +83,5 @@ INSERT INTO pseudo_artiste VALUES (8, 'Mistral');
 INSERT INTO pseudo_artiste VALUES (9, 'Essence');
 INSERT INTO pseudo_artiste VALUES (9, 'Chemise');
 INSERT INTO pseudo_artiste VALUES (2, 'Langlaise');
+
+COMMIT; -- On sauvegarde
