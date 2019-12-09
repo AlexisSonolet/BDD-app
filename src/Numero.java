@@ -62,6 +62,12 @@ public class Numero extends Table {
 		} catch (SQLException e) {
 			System.err.println("failed");
 	        e.printStackTrace(System.err);
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 	}
 
@@ -94,6 +100,12 @@ public class Numero extends Table {
             connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 	}
 
@@ -135,6 +147,12 @@ public class Numero extends Table {
 		} catch (SQLException e) {
 			System.err.println("failed");
 			e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 	}
 
@@ -153,6 +171,12 @@ public class Numero extends Table {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace(System.err);
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
         }
 
         return maxId;

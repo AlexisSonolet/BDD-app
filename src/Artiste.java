@@ -25,6 +25,12 @@ public class Artiste extends Table {
 	} catch (SQLException e) {
         System.err.println("failed");
         e.printStackTrace(System.err);
+        try {
+            connection.rollback();
+        } catch (SQLException e2) {
+            e2.printStackTrace();
+            
+        }
     }
   }
 
@@ -45,6 +51,12 @@ public class Artiste extends Table {
 		} catch (SQLException e) {
 	        System.err.println("failed");
 	        e.printStackTrace(System.err);
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 	    }
   }
 
