@@ -202,7 +202,7 @@ public class javaApp {
                         stmt = conn.prepareStatement("SELECT * FROM planning_numero ORDER BY dateSpectacle, heureSpectacle");
                         break;
                     case 9: // Numero GROUP BY themeNumero
-                        stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero");
+                        stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero, noteNumero");
                     case 10: // Retour
                         break;
                     default:
