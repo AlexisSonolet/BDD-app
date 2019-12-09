@@ -28,7 +28,6 @@ public class Artiste extends Table {
     }
   }
 
-  @Overload
   public void ajoutArtiste(String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
         this.ajoutArtiste(this.getMaxId() + 1, nomArtiste, prenomArtiste, dateNaissance, cirqueArtiste, telephoneArtiste);
   }

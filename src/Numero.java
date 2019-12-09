@@ -64,10 +64,9 @@ public class Numero extends Table {
 		}
 	}
 
-    @Overload
 	public void insert(String Theme, String Nom, String Resume, int Duree,
 			int NbArtistes, int idArtistePrincipal) {
-        this.insert(theme, nom, Resume, Duree, NbArtistes, idArtistePrincipal, this.getMaxId() + 1);
+        this.insert(Theme, Nom, Resume, Duree, NbArtistes, idArtistePrincipal, this.getMaxId() + 1);
     }
 	
 	public void suppressionNumero(int idNumero) {
@@ -138,7 +137,7 @@ public class Numero extends Table {
 		}
 	}
 
-    private void getMaxId() {
+    private int getMaxId() {
         int maxId = 0;
         try {
             PreparedStatement stm = connection.prepareStatement("SELECT idExpert FROM expert");
