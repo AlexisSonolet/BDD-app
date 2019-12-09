@@ -340,7 +340,6 @@ public class Database{
                 sizes[i]=structure.getColumnLabel(i+1).length();
             }
             lines.add(names);
-            res.first();
             while (res.next()){
                 ArrayList<String> line = new ArrayList<String>();
                 for (int i=0;i<m;i++){

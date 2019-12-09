@@ -173,7 +173,7 @@ public class javaApp {
         int choix = 0;
         PreparedStatement stmt = null;
         try {
-            while (choix != 11) {
+            while (choix != 12) {
                 System.out.println(menu_str);
                 System.out.print("Votre choix : ");
                 choix = Integer.parseInt(sc.nextLine());
@@ -210,14 +210,15 @@ public class javaApp {
                         stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero, noteNumero DESC");
                         break;
                     case 11: // Experts et spécialités
-                        stmt = conn.prepareStatement("SELECT * FROM specialite_artiste WHERE idArtiste IN expert.idExpert ORDER BY specialiteArtiste")
+                        stmt = conn.prepareStatement("SELECT specialiteartiste, idExpert FROM specialite_artiste JOIN expert ON idArtiste=idExpert ORDER BY specialiteArtiste");
+                        break;
                     case 12: // Retour
                         break;
                     default:
                         System.out.println("Mauvaise entrée ...\n\n");
                 }
 
-                if (choix >= 1 && choix <= 10) { // On a une query à executer et à afficher
+                if (choix >= 1 && choix <= 11) { // On a une query à executer et à afficher
                     ResultSet res = stmt.executeQuery();
                     db.printTable(res);
                     res.close();
