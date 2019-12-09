@@ -341,6 +341,9 @@ public class Database{
                 ArrayList<String> line = new ArrayList<String>();
                 for (int i=0;i<m;i++){
                     String col = res.getString(i+1);
+                    if (col == null)
+                        col = "";
+
                     if (col.length()>sizes[i]){
                         sizes[i]=col.length();
                     }

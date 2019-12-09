@@ -69,7 +69,7 @@ public class Numero extends Table {
 			int NbArtistes, int idArtistePrincipal) {
         this.insert(Theme, Nom, Resume, Duree, NbArtistes, idArtistePrincipal, this.getMaxId() + 1);
     }
-	
+
 	public void suppressionNumero(int idNumero) {
 		try {
             // Vérifie que idNumero est dans numero
@@ -116,7 +116,7 @@ public class Numero extends Table {
 
             c1stm.close();
 			res1.close();
-			
+
 			// Vérifie que la note est entre 0 et 10
 			if (note<0 || note>10){
 				throw new IllegalArgumentException("La note doit être entre 0 et 10");
@@ -148,10 +148,13 @@ public class Numero extends Table {
                 if (res.getInt(1) > maxId)
                     maxId = res.getInt(1);
             }
+
+            res.close();
+            stm.close();
         } catch (SQLException e) {
             e.printStackTrace(System.err);
-        } finally {
-            return maxId;
         }
+
+        return maxId;
     }
 }
