@@ -374,8 +374,33 @@ public class Database{
     private String[] getValues(String[] columns) {
         String[] values = new String[columns.length];
         for (int i = 0; i < columns.length; i++) {
-            System.out.println("Valeur de la colonne " + columns[i] + " : ");
-            values[i] = this.sc.nextLine();
+            if (columns[i]!="idArtiste"){
+                System.out.println("Valeur de la colonne " + columns[i] + " : ");
+                values[i] = this.sc.nextLine();
+            } else {
+                System.out.println("Connaissez-vous l'identifiant de l'artiste ? (y/n)");
+                boolean leave = false;
+                while (!leave) {
+                    String choice = sc.nextLine();
+                    switch (choice) {
+                        case "y":
+                            System.out.println("Valeur de la colonne " + columns[i] + " : ");
+                            values[i] = this.sc.nextLine();
+                            leave=true;
+                            break;
+                        case "n":
+                            try{
+                                values[i]=""+getArtist();
+                            } catch (UnknownObjectException e){
+                                values[i]="-1";
+                            }
+                            leave=true;
+                            break;
+                        default:
+                            System.out.println("Entrée invalide");
+                    }
+                }
+            }
         }
 
         return values;
