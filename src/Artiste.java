@@ -26,7 +26,13 @@ public class Artiste extends Table {
         e.printStackTrace(System.err);
     }
   }
-  
+
+  public void ajoutArtiste(String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
+        System.err.println("Max id trouvé : " + this.getMaxId());
+        this.ajoutArtiste(this.getMaxId() + 1, nomArtiste, prenomArtiste, dateNaissance, cirqueArtiste, telephoneArtiste);
+  }
+
+
   public void suppressionArtiste(int idArtiste) {
 	  try{
 	        PreparedStatement istm = connection.prepareStatement("DELETE FROM artiste WHERE idArtiste = ?");
@@ -37,6 +43,23 @@ public class Artiste extends Table {
 	        System.err.println("failed");
 	        e.printStackTrace(System.err);
 	    }
+  }
+
+  private int getMaxId() {
+        int maxId = 0;
+        try {
+            PreparedStatement stm = connection.prepareStatement("SELECT idArtiste FROM artiste");
+            ResultSet res = stm.executeQuery();
+
+            while (res.next()) {
+                if (res.getInt(1) > maxId)
+                    maxId = res.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.err);
+        } finally {
+            return maxId;
+        }
   }
 
   public ArrayList<Integer> recherche_prenom(String prenom){

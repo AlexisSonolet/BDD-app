@@ -34,13 +34,13 @@ public class Database{
     }
 
     public void prepareArtist() {
-        String[] columns = new String[] {"idArtiste", "nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
+        String[] columns = new String[] {"nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
         String[] values;
 
         System.out.println("***** Ajout d'une entrée dans la table artiste *****");
         values = this.getValues(columns);
 
-        this.artiste.ajoutArtiste(Integer.parseInt(values[0]), values[1], values[2], values[3], values[4], values[5]);
+        this.artiste.ajoutArtiste(values[0], values[1], values[2], values[3], values[4]);
     }
 
     public void prepareSupprimeArtist() {
