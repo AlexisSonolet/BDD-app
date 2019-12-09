@@ -159,7 +159,7 @@ public class Numero extends Table {
     private int getMaxId() {
         int maxId = 0;
         try {
-            PreparedStatement stm = connection.prepareStatement("SELECT idExpert FROM expert");
+            PreparedStatement stm = connection.prepareStatement("SELECT idNumero FROM expert");
             ResultSet res = stm.executeQuery();
 
             while (res.next()) {
