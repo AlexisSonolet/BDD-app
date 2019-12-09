@@ -57,6 +57,7 @@ public class Numero extends Table {
 			prstmt.setInt(7, idArtistePrincipal);
             prstmt.executeQuery();
 			prstmt.close();
+			database.planning_artiste.insert(idArtistePrincipal, idNumero);
             connection.commit();
 		} catch (SQLException e) {
 			System.err.println("failed");
