@@ -128,6 +128,29 @@ public class Evaluation extends Table{
             }
             c2stm.close();
             res2.close();
+            // Check that the expert's circus is not one of the show's artists
+            String sbig_stm1 = "SELECT cirqueArtiste FROM Artiste JOIN Planning_Artiste ON Artiste.idArtiste = Planning_Artiste.idArtiste AND Planning_Artiste.idNumero = ?";
+            PreparedStatement big_stm1 = connection.prepareStatement(sbig_stm1);
+            big_stm1.setInt(1, idNumero);
+            ResultSet bres1 = big_stm1.executeQuery();
+            String sbig_stm2 = "SELECT cirqueArtiste FROM Artiste WHERE idArtiste = ?";
+            PreparedStatement big_stm2 = connection.prepareStatement(sbig_stm2);
+            big_stm2.setInt(1, idExpert);
+            ResultSet bres2 = big_stm2.executeQuery();
+
+            while (bres2.next()){
+                String cirExp = bres2.getString(1);
+                while (bres1.next()){
+                    String cirArt = bres1.getString(1);
+                    if (cirArt==cirExp){
+                        throw new IllegalArgumentException("Cet expert est du même cirque qu'un artiste du numéro");
+                    }
+                }
+            }
+            bres1.close();
+            bres2.close();
+            big_stm1.close();
+            big_stm2.close();
             // Check that we won't have too many specialists.
             PreparedStatement c3stm = connection.prepareStatement("SELECT * from Specialite_Artiste WHERE idArtiste=? AND SpecialiteArtiste=?");
             c3stm.setString(1,""+idExpert);
