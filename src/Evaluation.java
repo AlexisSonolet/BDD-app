@@ -71,6 +71,7 @@ public class Evaluation extends Table{
             theme = res3.getString(1);
             c3stm.close();
             res3.close();
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("failed");
 			e.printStackTrace(System.err);
@@ -180,6 +181,7 @@ public class Evaluation extends Table{
                 stm.close();
             }
             cancel();
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("failed");
 			e.printStackTrace(System.err);
@@ -203,6 +205,8 @@ public class Evaluation extends Table{
             PreparedStatement c2stm = connection.prepareStatement("DELETE * from Evaluation WHERE idNumero=?");
             c2stm.setString(1,""+idNum);
             c2stm.executeQuery();
+            c2stm.close();
+            connection.commit();
         } catch (SQLException e) {
             System.err.println("failed");
 			e.printStackTrace(System.err);
