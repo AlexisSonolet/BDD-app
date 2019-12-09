@@ -34,6 +34,30 @@ public class Planning_Artistes extends Table {
             }
             res1.close();
             c1stm.close();
+            
+            //On verifie que l'artiste n'est pas du meme cirque que l'un des evaluateurs du numero 
+            String sbig_stm1 = "SELECT cirqueArtiste FROM Artiste JOIN evaluation ON Artiste.idArtiste = evaluation.idExpert WHERE evaluation.idNumero = ?";
+            PreparedStatement big_stm1 = connection.prepareStatement(sbig_stm1);
+            big_stm1.setInt(1, idNumero);
+            ResultSet bres1 = big_stm1.executeQuery();
+            String sbig_stm2 = "SELECT cirqueArtiste FROM Artiste WHERE idArtiste = ?";
+            PreparedStatement big_stm2 = connection.prepareStatement(sbig_stm2);
+            big_stm2.setInt(1, idArtiste);
+            ResultSet bres2 = big_stm2.executeQuery();
+
+            while (bres2.next()){
+                String cirExp = bres2.getString(1);
+                while (bres1.next()){
+                    String cirArt = bres1.getString(1);
+                    if (cirArt.equals(cirExp)){
+                        throw new IllegalArgumentException("Cet artiste est du meme cirque que l'un des evaluateurs de ce numero");
+                    }
+                }
+            }
+            bres1.close();
+            bres2.close();
+            big_stm1.close();
+            big_stm2.close();
 
 			// Prepare the request
 			String sql = "INSERT INTO planning_artiste (idArtiste, idNumero) VALUES (?, ?)";
