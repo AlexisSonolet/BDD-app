@@ -42,7 +42,11 @@ public class Database{
         int idArtiste = this.artiste.ajoutArtiste(values[0], values[1], values[2], values[3], values[4]);
 
         // Does the artist want to make a show?
-
+        try {
+        	artiste.connection.commit();
+        } catch(SQLException e) {
+        	System.out.println(e);
+        }
         System.out.println("Voulez-vous ajouter un numéro dont cet artiste en sera le principal ? (y/n)");
         boolean leave = false;
         while (!leave) {
@@ -123,8 +127,7 @@ public class Database{
         System.out.println("***** Ajout d'une entrée dans la table numéro *****");
         values = this.getValues(columns);
 
-        this.numero.insert(values[0], values[1], values[2], Integer.parseInt(values[3]), Integer.parseInt(values[4]),
-        		Integer.parseInt(values[5]));
+        this.numero.insert(values[0], values[1], values[2], Integer.parseInt(values[3]), Integer.parseInt(values[4]), idArtistePrincipal);
     }
 
     public void prepareSupprimeNumero() {
