@@ -34,7 +34,7 @@ public class Database{
     }
 
     public void prepareArtist() {
-        String[] columns = new String[] {"nomArtiste", "prenomArtiste", "dateNaissance", "cirqueArtiste", "telephoneArtiste"};
+        String[] columns = new String[] {"nomArtiste", "prenomArtiste", "dateNaissance (YYYY-MM-DD)", "cirqueArtiste", "telephoneArtiste"};
         String[] values;
 
         System.out.println("***** Ajout d'une entrée dans la table artiste *****");
