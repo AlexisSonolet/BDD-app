@@ -28,8 +28,10 @@ public class Artiste extends Table {
     }
   }
 
-  public void ajoutArtiste(String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
-        this.ajoutArtiste(this.getMaxId() + 1, nomArtiste, prenomArtiste, dateNaissance, cirqueArtiste, telephoneArtiste);
+  public int ajoutArtiste(String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
+    int idA = this.getMaxId() + 1;
+    this.ajoutArtiste(idA, nomArtiste, prenomArtiste, dateNaissance, cirqueArtiste, telephoneArtiste);
+    return idA;
   }
 
 
@@ -46,7 +48,7 @@ public class Artiste extends Table {
 	    }
   }
 
-  private int getMaxId() {
+  public int getMaxId() {
         int maxId = 0;
         try {
             PreparedStatement stm = connection.prepareStatement("SELECT idArtiste FROM artiste");
