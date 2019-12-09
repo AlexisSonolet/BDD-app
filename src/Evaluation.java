@@ -1,7 +1,5 @@
 import java.sql.*;
 
-import com.sun.org.apache.xpath.internal.axes.SelfIteratorNoPredicate;
-
 public class Evaluation extends Table{
 
     private int idNumero;
