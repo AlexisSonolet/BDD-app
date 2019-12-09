@@ -160,7 +160,7 @@ public class javaApp {
             }
         }
     }
-    
+
     private static void afficher_table(Database db, Connection conn, Scanner sc) {
         String menu_str = "******* Afficher le contenu d'une table *******\n";
         menu_str += javaApp.list_tables;
@@ -202,7 +202,7 @@ public class javaApp {
                         stmt = conn.prepareStatement("SELECT * FROM planning_numero ORDER BY dateSpectacle, heureSpectacle");
                         break;
                     case 9: // Numero GROUP BY themeNumero
-                        stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero, noteNumero");
+                        stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero, noteNumero DESC");
                     case 10: // Retour
                         break;
                     default:
@@ -214,6 +214,7 @@ public class javaApp {
                     db.printTable(res);
                     res.close();
                     stmt.close();
+                    System.out.println("\n");
                 }
             }
         } catch (SQLException e) {
