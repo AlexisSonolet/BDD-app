@@ -69,16 +69,19 @@ public class javaApp {
         menu_str += "11. Retour arrière\n";
 
         int choix = 0;
-        while (choix != 11) {
-            System.out.println(menu_str);
+        while (choix != 2) {
+            System.out.println("1. Supprimer un numero du planning d'un spectacle\n2. Retour arrière");
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
 
             switch (choix) {
                 case 1: // Artiste
-                    db.prepareSupprimeArtist();
+                    db.prepareSuppressionNumerosDansSpectacle();
+                    //db.prepareSupprimeArtist();
                     break;
-                case 2: // Numero
+                case 2:
+                    break; // Numero
+                /*
                 	db.prepareSupprimeNumero();
                     break;
                 case 3: // Spectacle
@@ -105,7 +108,7 @@ public class javaApp {
                     db.prepareSuppressionNumerosDansSpectacle();
                     break;
                 case 11: //Retour
-                    break;
+                    break; */
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
             }
@@ -115,12 +118,13 @@ public class javaApp {
     private static void ajouter_table(Database db, Scanner sc) {
         String menu_str = "******* Ajouter une transaction dans une table *******\n";
         menu_str += javaApp.list_tables;
-        menu_str += "8. Planning des numeros\n";
+        menu_str += "8. Ajouter un numero au planning d'un spectacle\n";
         menu_str += "9. Evaluation globale d'un numéro\n";
-        menu_str += "10. Retour arrière\n";
+        menu_str += "10. Ajouter un artiste au planning d'un numero\n";
+        menu_str += "11. Retour arrière\n";
 
         int choix = 0;
-        while (choix != 10) {
+        while (choix != 11) {
             System.out.println(menu_str);
             System.out.print("Votre choix : ");
             choix = Integer.parseInt(sc.nextLine());
@@ -153,7 +157,10 @@ public class javaApp {
                 case 9: // Evaluation globale
                     db.prepareEvaluationGlobale();
                     break;
-                case 10: // Retour
+                case 10: // Evaluation globale
+                    db.prepareInsertArtisteDansPlanning();
+                    break;
+                case 11: // Retour
                     break;
                 default:
                     System.out.println("Mauvaise entrée ...\n\n");
@@ -165,13 +172,15 @@ public class javaApp {
         String menu_str = "******* Afficher le contenu d'une table *******\n";
         menu_str += javaApp.list_tables;
         menu_str += "8. Planning des spectacles\n";
-        menu_str += "9. Numéros (groupés par thème)\n";
-        menu_str += "10. Retour arrière\n";
+        menu_str += "9. Planning des numeros\n";
+        menu_str += "10. Numéros (groupés par thème et par notes)\n";
+        menu_str += "11. Experts et spécialités\n";
+        menu_str += "12. Retour arrière\n";
 
         int choix = 0;
         PreparedStatement stmt = null;
         try {
-            while (choix != 10) {
+            while (choix != 12) {
                 System.out.println(menu_str);
                 System.out.print("Votre choix : ");
                 choix = Integer.parseInt(sc.nextLine());
@@ -201,15 +210,22 @@ public class javaApp {
                     case 8: // Spectacle
                         stmt = conn.prepareStatement("SELECT * FROM planning_numero ORDER BY dateSpectacle, heureSpectacle");
                         break;
-                    case 9: // Numero GROUP BY themeNumero
+                    case 9: // Planning numero
+                        stmt = conn.prepareStatement("SELECT * FROM planning_artiste ORDER BY idNumero");
+                        break;
+                    case 10: // Numero GROUP BY themeNumero
                         stmt = conn.prepareStatement("SELECT * FROM numero ORDER BY themeNumero, noteNumero DESC");
-                    case 10: // Retour
+                        break;
+                    case 11: // Experts et spécialités
+                        stmt = conn.prepareStatement("SELECT specialiteartiste, idExpert FROM specialite_artiste JOIN expert ON idArtiste=idExpert ORDER BY specialiteArtiste");
+                        break;
+                    case 12: // Retour
                         break;
                     default:
                         System.out.println("Mauvaise entrée ...\n\n");
                 }
 
-                if (choix >= 1 && choix <= 9) { // On a une query à executer et à afficher
+                if (choix >= 1 && choix <= 11) { // On a une query à executer et à afficher
                     ResultSet res = stmt.executeQuery();
                     db.printTable(res);
                     res.close();

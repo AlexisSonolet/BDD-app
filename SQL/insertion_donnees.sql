@@ -1,3 +1,5 @@
+BEGIN;
+
 -- Table des artistes
 INSERT INTO artiste VALUES (0, 'Dupont', 'Jacques', TO_DATE('1997-10-24', 'YYYY-MM-DD'), 'La fete a la maison', '06-18-18-18-18');
 INSERT INTO artiste VALUES (1, 'Jibougne', 'Leo', TO_DATE('1994-04-14', 'YYYY-MM-DD'), 'La fete a la maison', '06-28-18-18-18');

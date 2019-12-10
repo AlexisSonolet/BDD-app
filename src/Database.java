@@ -39,7 +39,30 @@ public class Database{
         System.out.println("***** Ajout d'une entrée dans la table artiste *****");
         values = this.getValues(columns);
 
-        this.artiste.ajoutArtiste(values[0], values[1], values[2], values[3], values[4]);
+        int idArtiste = this.artiste.ajoutArtiste(values[0], values[1], values[2], values[3], values[4]);
+
+        // Does the artist want to make a show?
+        try {
+        	artiste.connection.commit();
+        } catch(SQLException e) {
+        	System.out.println(e);
+        }
+        System.out.println("Voulez-vous ajouter un numéro dont cet artiste en sera le principal ? (y/n)");
+        boolean leave = false;
+        while (!leave) {
+            String choice = sc.nextLine();
+            switch (choice) {
+                case "y":
+                    leave = true;
+                    break;
+                case "n":
+                    return;
+                default:
+                    System.out.println("Entrée invalide");
+            }
+        }
+
+        prepareNumero(idArtiste);
     }
 
     public void prepareSupprimeArtist() {
@@ -95,6 +118,16 @@ public class Database{
 
         this.numero.insert(values[0], values[1], values[2], Integer.parseInt(values[3]), Integer.parseInt(values[4]),
         		Integer.parseInt(values[5]));
+    }
+
+    public void prepareNumero(int idArtistePrincipal) {
+        String[] columns = new String[] {"Theme", "Nom", "Resume", "Duree", "NbArtistes"};
+        String[] values;
+
+        System.out.println("***** Ajout d'une entrée dans la table numéro *****");
+        values = this.getValues(columns);
+
+        this.numero.insert(values[0], values[1], values[2], Integer.parseInt(values[3]), Integer.parseInt(values[4]), idArtistePrincipal);
     }
 
     public void prepareSupprimeNumero() {
@@ -286,6 +319,27 @@ public class Database{
         this.spectacle.deleteNumerosFromPlanning(listeNumeros);
     }
 
+//Planning artistes
+    public void prepareInsertArtisteDansPlanning() {
+        Boolean restart = true;
+        Boolean exit = false;
+        int artiste = - 1;
+        while (restart) {
+            try {
+                artiste = getArtist();
+                restart = false;
+            } catch (UnknownObjectException e) {
+                System.out.println("erreur, voulez-vous recommencer ? (1 : oui ; 2 : quitter)");
+                exit = (Integer.parseInt(this.sc.nextLine()) == 2);
+                if (exit) { restart = false; }
+            }
+        }
+        if (!exit) {
+            System.out.println("Id du numero auquel l'artiste participe : ");
+            int numero = Integer.parseInt(this.sc.nextLine());
+            this.planning_artiste.insert(artiste, numero);
+        }
+    }
 
 // AFFICHAGE TABLES
     /**
@@ -341,8 +395,33 @@ public class Database{
     private String[] getValues(String[] columns) {
         String[] values = new String[columns.length];
         for (int i = 0; i < columns.length; i++) {
-            System.out.println("Valeur de la colonne " + columns[i] + " : ");
-            values[i] = this.sc.nextLine();
+            if (columns[i]!="idArtiste"){
+                System.out.println("Valeur de la colonne " + columns[i] + " : ");
+                values[i] = this.sc.nextLine();
+            } else {
+                System.out.println("Connaissez-vous l'identifiant de l'artiste ? (y/n)");
+                boolean leave = false;
+                while (!leave) {
+                    String choice = sc.nextLine();
+                    switch (choice) {
+                        case "y":
+                            System.out.println("Valeur de la colonne " + columns[i] + " : ");
+                            values[i] = this.sc.nextLine();
+                            leave=true;
+                            break;
+                        case "n":
+                            try{
+                                values[i]=""+getArtist();
+                            } catch (UnknownObjectException e){
+                                values[i]="-1";
+                            }
+                            leave=true;
+                            break;
+                        default:
+                            System.out.println("Entrée invalide");
+                    }
+                }
+            }
         }
 
         return values;

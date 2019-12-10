@@ -62,6 +62,12 @@ public class Numero extends Table {
 		} catch (SQLException e) {
 			System.err.println("failed");
 	        e.printStackTrace(System.err);
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 	}
 
@@ -94,6 +100,12 @@ public class Numero extends Table {
             connection.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 	}
 
@@ -123,7 +135,7 @@ public class Numero extends Table {
 			}
 
 			// Prepare the request
-			String sql = "UPDATE Numero SET (noteNumero = ?, evaluationNumero = ?) WHERE idNumero = ?)";
+			String sql = "UPDATE Numero SET noteNumero = ?, evaluationNumero = ? WHERE idNumero = ?";
 			PreparedStatement prstmt = connection.prepareStatement(sql);
 
 			prstmt.setFloat(1, note);
@@ -135,13 +147,19 @@ public class Numero extends Table {
 		} catch (SQLException e) {
 			System.err.println("failed");
 			e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 		}
 	}
 
     private int getMaxId() {
         int maxId = 0;
         try {
-            PreparedStatement stm = connection.prepareStatement("SELECT idExpert FROM expert");
+            PreparedStatement stm = connection.prepareStatement("SELECT idNumero FROM expert");
             ResultSet res = stm.executeQuery();
 
             while (res.next()) {
@@ -153,6 +171,12 @@ public class Numero extends Table {
             stm.close();
         } catch (SQLException e) {
             e.printStackTrace(System.err);
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
         }
 
         return maxId;

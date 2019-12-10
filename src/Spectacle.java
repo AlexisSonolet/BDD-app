@@ -330,7 +330,8 @@ public class Spectacle extends Table{
         int nbNumero = getNumberOfNumerosInSpectacle(date, heure);
         if (nbNumero < 2) {
             throw new IllegalArgumentException("Vous essayez de supprimer le seul numero d'un spectacle, or "
-                    + "un spectacle doit avoir au moins 1 numero. id du numero : " + num);
+                    + "un spectacle doit avoir au moins 1 numero, ou alors vous essayez de supprimer un numero "
+                    + "n'apparaissant pas dans le planning. id du numero : " + num);
         }
 
         //On commence la suppression

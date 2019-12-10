@@ -25,11 +25,19 @@ public class Artiste extends Table {
 	} catch (SQLException e) {
         System.err.println("failed");
         e.printStackTrace(System.err);
+        try {
+            connection.rollback();
+        } catch (SQLException e2) {
+            e2.printStackTrace();
+            
+        }
     }
   }
 
-  public void ajoutArtiste(String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
-        this.ajoutArtiste(this.getMaxId() + 1, nomArtiste, prenomArtiste, dateNaissance, cirqueArtiste, telephoneArtiste);
+  public int ajoutArtiste(String nomArtiste, String prenomArtiste, String dateNaissance, String cirqueArtiste, String telephoneArtiste){
+    int idA = this.getMaxId() + 1;
+    this.ajoutArtiste(idA, nomArtiste, prenomArtiste, dateNaissance, cirqueArtiste, telephoneArtiste);
+    return idA;
   }
 
 
@@ -43,10 +51,16 @@ public class Artiste extends Table {
 		} catch (SQLException e) {
 	        System.err.println("failed");
 	        e.printStackTrace(System.err);
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+			    e2.printStackTrace();
+                
+            }
 	    }
   }
 
-  private int getMaxId() {
+  public int getMaxId() {
         int maxId = 0;
         try {
             PreparedStatement stm = connection.prepareStatement("SELECT idArtiste FROM artiste");
