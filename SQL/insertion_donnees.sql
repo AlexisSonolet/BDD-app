@@ -65,6 +65,14 @@ INSERT INTO numero VALUES (3, 'Jai un grand sourire', 'Clown', 'Ceci est un resu
 INSERT INTO numero VALUES (4, 'Imaginez la licorne', 'Zoo', 'Ceci est un resume du numero', 14, 10, 5, 3, 'We want your soul');
 INSERT INTO numero VALUES (5, 'Quelle vie', 'Clown', 'Ceci est un resume du numero', 17, 20, 3, 7, 'Ceci est une evaluation');
 
+-- Planning des artistes
+INSERT INTO planning_artiste VALUES (10, 0);
+INSERT INTO planning_artiste VALUES (0, 1);
+INSERT INTO planning_artiste VALUES (2, 2);
+INSERT INTO planning_artiste VALUES (1, 3);
+INSERT INTO planning_artiste VALUES (14, 4);
+INSERT INTO planning_artiste VALUES (17, 5);
+
 -- Table des experts
 INSERT INTO expert VALUES (7);
 INSERT INTO expert VALUES (4);
