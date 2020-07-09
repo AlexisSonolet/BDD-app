@@ -1,4 +1,6 @@
-# Java-app
+# BDD-app
+
+Programme d'étude de base de données écrit en Java
 
 Scripts SQL :
 Pour exécuter ces scripts, se placer dans le dossier SQL
